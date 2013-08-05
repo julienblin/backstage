@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{8FA49A3D-85C5-4125-A6D8-3B27A240EBC4}</ProjectGuid>
+    <ProjectGuid>{4DE1DE2A-86EF-4E4C-AE67-E433BF0181DD}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Backstage</RootNamespace>
-    <AssemblyName>Backstage</AssemblyName>
+    <RootNamespace>Backstage.Web</RootNamespace>
+    <AssemblyName>Backstage.Web</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -16,22 +16,21 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\bin\Debug\Backstage\</OutputPath>
+    <OutputPath>..\..\bin\Debug\Backstage.Web\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <CodeAnalysisRuleSet>..\Backstage.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\bin\Release\Backstage\</OutputPath>
+    <OutputPath>..\..\bin\Release\Backstage.Web\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\..\bin\Release\Backstage\Backstage.xml</DocumentationFile>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <DocumentationFile>..\..\bin\Release\Backstage.Web\Backstage.Web.xml</DocumentationFile>
     <RunCodeAnalysis>true</RunCodeAnalysis>
     <CodeAnalysisRuleSet>..\Backstage.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
@@ -42,53 +41,40 @@
     <AssemblyOriginatorKeyFile>..\Backstage.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Common.Logging">
-      <HintPath>..\packages\Common.Logging.2.1.2\lib\net40\Common.Logging.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Args.cs" />
-    <Compile Include="BackstageException.cs" />
-    <Compile Include="Context.cs" />
-    <Compile Include="ContextFactory.cs" />
-    <Compile Include="ContextFactoryConfiguration.cs" />
-    <Compile Include="ICommand.cs" />
-    <Compile Include="IContext.cs" />
-    <Compile Include="IContextFactory.cs" />
-    <Compile Include="IContextProvider.cs" />
-    <Compile Include="IContextProviderFactory.cs" />
-    <Compile Include="ICurrentContextHolder.cs" />
-    <Compile Include="IEntity.cs" />
-    <Compile Include="Implementation\DefaultContext.cs" />
-    <Compile Include="Implementation\DefaultContextFactory.cs" />
-    <Compile Include="Implementation\PaginationResult.cs" />
-    <Compile Include="Implementation\ThreadStaticCurrentContextHolder.cs" />
-    <Compile Include="IPaginationResult.cs" />
-    <Compile Include="IQuery.cs" />
-    <Compile Include="IValidatable.cs" />
+    <Compile Include="ContextPerRequestHttpModule.cs" />
+    <Compile Include="IBackstageWebApplication.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="StringExtensions.cs" />
-    <Compile Include="ValidatableExtensions.cs" />
+    <Compile Include="WebCurrentContextHolder.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Backstage.snk">
       <Link>Backstage.snk</Link>
     </None>
-    <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Backstage\Backstage.csproj">
+      <Project>{8fa49a3d-85c5-4125-a6d8-3b27a240ebc4}</Project>
+      <Name>Backstage</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
