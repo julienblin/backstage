@@ -1,5 +1,8 @@
 ﻿namespace Backstage.Tests.Implementation
 {
+    using System.ComponentModel.DataAnnotations;
+    using System.Linq;
+
     using FluentAssertions;
 
     using Moq;
@@ -20,6 +23,17 @@
 
             contextFactoryProviderMock.Verify(x => x.Start(contextFactory));
             contextFactoryProviderMock.Verify(x => x.Dispose());
+        }
+
+        [Test]
+        [ExpectedException(typeof(BackstageException))]
+        public void It_should_validate_the_context_provider_factory()
+        {
+            var contextFactoryProviderMock = new Mock<IContextProviderFactory>();
+            var validatableContextFactoryProviderMock = contextFactoryProviderMock.As<IValidatableObject>();
+            validatableContextFactoryProviderMock.Setup(x => x.Validate(It.IsAny<ValidationContext>())).Returns(new[] { new ValidationResult("errorMessage") });
+
+            ContextFactory.StartNew(new ContextFactoryConfiguration(contextFactoryProviderMock.Object));
         }
 
         [Test]

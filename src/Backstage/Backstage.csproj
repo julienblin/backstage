@@ -73,6 +73,7 @@
     <Compile Include="IPaginationResult.cs" />
     <Compile Include="IQuery.cs" />
     <Compile Include="IValidatable.cs" />
+    <Compile Include="OrderType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources.Designer.cs">
       <AutoGen>True</AutoGen>

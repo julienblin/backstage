@@ -84,6 +84,7 @@
                 {
                     Log.Info(Resources.Starting.Format(this.configuration.ContextProviderFactory));
                     var stopwatch = Stopwatch.StartNew();
+                    this.configuration.ContextProviderFactory.EnforceValidation();
                     this.configuration.ContextProviderFactory.Start(this);
                     stopwatch.Stop();
                     Log.Info(Resources.StartedIn.Format(this.configuration.ContextProviderFactory, stopwatch.ElapsedMilliseconds));

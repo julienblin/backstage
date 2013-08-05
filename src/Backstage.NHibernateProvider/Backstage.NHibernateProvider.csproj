@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{4DE1DE2A-86EF-4E4C-AE67-E433BF0181DD}</ProjectGuid>
+    <ProjectGuid>{3738FB0D-5447-42A6-BBDF-1396DE174669}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Backstage.Web</RootNamespace>
-    <AssemblyName>Backstage.Web</AssemblyName>
+    <RootNamespace>Backstage.NHibernateProvider</RootNamespace>
+    <AssemblyName>Backstage.NHibernateProvider</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -16,7 +16,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\bin\Debug\Backstage.Web\</OutputPath>
+    <OutputPath>..\..\bin\Debug\Backstage.NHibernateProvider\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -25,12 +25,12 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\bin\Release\Backstage.Web\</OutputPath>
+    <OutputPath>..\..\bin\Release\Backstage.NHibernateProvider\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <DocumentationFile>..\..\bin\Release\Backstage.Web\Backstage.Web.xml</DocumentationFile>
+    <DocumentationFile>..\..\bin\Release\Backstage.NHibernateProvider\Backstage.NHibernateProvider.xml</DocumentationFile>
     <RunCodeAnalysis>true</RunCodeAnalysis>
     <CodeAnalysisRuleSet>..\Backstage.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
@@ -41,28 +41,57 @@
     <AssemblyOriginatorKeyFile>..\Backstage.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Common.Logging">
+      <HintPath>..\packages\Common.Logging.2.1.2\lib\net40\Common.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentNHibernate">
+      <HintPath>..\packages\FluentNHibernate.1.3.0.733\lib\FluentNHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="Iesi.Collections">
+      <HintPath>..\packages\Iesi.Collections.3.2.0.4000\lib\Net35\Iesi.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate">
+      <HintPath>..\packages\NHibernate.3.3.3.4000\lib\Net35\NHibernate.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="ContextPerRequestHttpModule.cs" />
-    <Compile Include="IBackstageWebApplication.cs" />
+    <Compile Include="BasePreparedQuery.cs" />
+    <Compile Include="DatabaseType.cs" />
+    <Compile Include="INHQuery.cs" />
+    <Compile Include="IPreparedQuery.cs" />
+    <Compile Include="NHContextProvider.cs" />
+    <Compile Include="NHContextProviderFactory.cs" />
+    <Compile Include="NHContextProviderFactoryConfiguration.cs" />
+    <Compile Include="NHEntity.cs" />
+    <Compile Include="NHEntityMap.cs" />
+    <Compile Include="NHQueryCriteria.cs" />
+    <Compile Include="NHQueryQueryOver.cs" />
+    <Compile Include="NHQuerySql.cs" />
+    <Compile Include="PreparedQueryCriteria.cs" />
+    <Compile Include="PreparedQueryQueryOver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="WebCurrentContextHolder.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Backstage.snk">
       <Link>Backstage.snk</Link>
     </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Backstage\Backstage.csproj">
