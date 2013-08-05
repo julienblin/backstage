@@ -1,0 +1,63 @@
+﻿namespace Backstage
+{
+    using System;
+
+    /// <summary>
+    /// The ContextProvider interface.
+    /// A context provider provides the underlying persistence mechanism for some entities through contexts.
+    /// </summary>
+    public interface IContextProvider : IDisposable
+    {
+        /// <summary>
+        /// Adds an entity.
+        /// </summary>
+        /// <param name="entity">
+        /// The entity.
+        /// </param>
+        void Add(IEntity entity);
+
+        /// <summary>
+        /// Removes an entity.
+        /// </summary>
+        /// <param name="entity">
+        /// The entity.
+        /// </param>
+        void Remove(IEntity entity);
+
+        /// <summary>
+        /// Reloads the <paramref name="entity"/>.
+        /// </summary>
+        /// <param name="entity">
+        /// The entity.
+        /// </param>
+        void Reload(IEntity entity);
+
+        /// <summary>
+        /// Gets an entity by its id.
+        /// </summary>
+        /// <param name="id">
+        /// The entity id.
+        /// </param>
+        /// <typeparam name="T">
+        /// The type of entity.
+        /// </typeparam>
+        /// <returns>
+        /// The entity.
+        /// </returns>
+        T GetById<T>(object id);
+
+        /// <summary>
+        /// Fulfill a <see cref="IQuery{T}"/>.
+        /// </summary>
+        /// <param name="query">
+        /// The query.
+        /// </param>
+        /// <typeparam name="T">
+        /// The type or returned result query.
+        /// </typeparam>
+        /// <returns>
+        /// The result.
+        /// </returns>
+        T Fulfill<T>(IQuery<T> query);
+    }
+}

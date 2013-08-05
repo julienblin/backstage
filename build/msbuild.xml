@@ -22,7 +22,7 @@
   </Target>
 
   <Target Name="GetGitVersion">
-    <Exec Command="git describe" ConsoleToMSBuild="true" ContinueOnError="true">
+    <Exec Command="git describe --abbrev=0" ConsoleToMSBuild="true" ContinueOnError="true">
       <Output TaskParameter="ConsoleOutput" PropertyName="Version" />
     </Exec>
     <Exec Command="git describe --long" ConsoleToMSBuild="true" ContinueOnError="true">
@@ -36,7 +36,9 @@
                   AssemblyProduct="Backstage"
                   AssemblyVersion="$(Version)"
                   AssemblyInformationalVersion="$(LongVersion)"
-                  ComVisible="false" />
+                  ComVisible="false"
+                  ClsCompliant="true"
+                  NeutralResourcesLanguage="en" />
 
   </Target>
 
