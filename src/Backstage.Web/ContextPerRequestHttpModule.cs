@@ -67,7 +67,7 @@
         /// </param>
         private static void OnBeginRequest(object sender, EventArgs eventArgs)
         {
-            ContextFactory.Current.StartNewContext();
+            Context.Current = ContextFactory.Current.StartNewContext();
         }
 
         /// <summary>

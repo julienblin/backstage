@@ -21,6 +21,11 @@
         private IEnumerable<Assembly> mappingAssemblies;
 
         /// <summary>
+        /// The convention assemblies.
+        /// </summary>
+        private IEnumerable<Assembly> conventionAssemblies;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="NHContextProviderFactoryConfiguration"/> class.
         /// </summary>
         public NHContextProviderFactoryConfiguration()
@@ -75,6 +80,22 @@
             set
             {
                 this.mappingAssemblies = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the assemblies to scan for convention classes.
+        /// </summary>
+        public IEnumerable<Assembly> ConventionAssemblies
+        {
+            get
+            {
+                return this.conventionAssemblies ?? Enumerable.Empty<Assembly>();
+            }
+
+            set
+            {
+                this.conventionAssemblies = value;
             }
         }
     }

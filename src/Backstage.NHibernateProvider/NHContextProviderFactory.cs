@@ -4,6 +4,8 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
+    using Backstage.NHibernateProvider.Logs;
+
     using Common.Logging;
 
     using FluentNHibernate.Cfg;
@@ -103,7 +105,7 @@
         /// </returns>
         public IContextProvider CreateContextProvider(IContext context)
         {
-            throw new System.NotImplementedException();
+            return new NHContextProvider(this, context);
         }
 
         /// <summary>
@@ -180,10 +182,19 @@
 
             foreach (var mappingAssembly in this.configuration.MappingAssemblies)
             {
-                fluentConfig.Mappings(m => m.FluentMappings.AddFromAssembly(mappingAssembly));
+                fluentConfig.Mappings(m =>
+                    {
+                        var container = m.FluentMappings.AddFromAssembly(mappingAssembly);
+                        container.Conventions.AddAssembly(typeof(NHContextProviderFactory).Assembly);
+                        foreach (var conventionAssembly in this.configuration.ConventionAssemblies)
+                        {
+                            container.Conventions.AddAssembly(conventionAssembly);
+                        }
+                    });
             }
 
             var resultConfig = fluentConfig.BuildConfiguration();
+            LoggerProvider.SetLoggersFactory(new NHCommonLoggerFactory());
 
             foreach (var key in this.configuration.NHProperties.Keys)
             {

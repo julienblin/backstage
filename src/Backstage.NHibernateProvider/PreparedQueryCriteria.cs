@@ -132,10 +132,10 @@
                     switch (orderByPath.OrderType)
                     {
                         case OrderType.Asc:
-                            result.AddOrder(Order.Asc(ExpressionProcessor.FindMemberExpression(orderByPath.Path)));
+                            result.AddOrder(Order.Asc(ExpressionProcessor.FindPropertyExpression(orderByPath.Path.Body)));
                             break;
                         case OrderType.Desc:
-                            result.AddOrder(Order.Desc(ExpressionProcessor.FindMemberExpression(orderByPath.Path)));
+                            result.AddOrder(Order.Desc(ExpressionProcessor.FindPropertyExpression(orderByPath.Path.Body)));
                             break;
                         default:
                             Log.Error(Resources.UnrecognizedOrderType.Format(orderByPath.OrderType));
