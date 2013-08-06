@@ -160,5 +160,23 @@
                 commandMock.Verify(x => x.Execute(It.Is<IContext>(c => c.Parent == context)));
             }
         }
+
+        [Test]
+        public void It_should_raise_events()
+        {
+            using (var context = ContextFactory.Current.StartNewContext())
+            {
+                context.MonitorEvents();
+                context.Commit();
+
+                context.ShouldRaise("TransactionCommitting")
+                       .WithSender(context)
+                       .WithArgs<TransactionCommittingEventArgs>(x => x.Transaction != null);
+
+                context.ShouldRaise("TransactionCommitted")
+                       .WithSender(context)
+                       .WithArgs<TransactionCommittedEventArgs>(x => x.Transaction != null);
+            }
+        }
     }
 }

@@ -15,6 +15,16 @@
     public interface IContext : IDisposable
     {
         /// <summary>
+        /// The transaction committing event. Raised synchronously before the transaction is committed.
+        /// </summary>
+        event EventHandler<TransactionCommittingEventArgs> TransactionCommitting;
+
+        /// <summary>
+        /// The transaction committed event. Raised synchronously after the transaction is committed.
+        /// </summary>
+        event EventHandler<TransactionCommittedEventArgs> TransactionCommitted;
+
+        /// <summary>
         /// Gets the unique id of this context.
         /// </summary>
         Guid Id { get; }

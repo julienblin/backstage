@@ -61,6 +61,15 @@ namespace Backstage {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} committed in {1} milliseconds..
+        /// </summary>
+        internal static string CommittedIn {
+            get {
+                return ResourceManager.GetString("CommittedIn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Committing {0}....
         /// </summary>
         internal static string Committing {
@@ -102,6 +111,15 @@ namespace Backstage {
         internal static string Disposing {
             get {
                 return ResourceManager.GetString("Disposing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There has been an error while committing transaction. See inner exception for more information..
+        /// </summary>
+        internal static string ErrorWhileCommitting {
+            get {
+                return ResourceManager.GetString("ErrorWhileCommitting", resourceCulture);
             }
         }
         

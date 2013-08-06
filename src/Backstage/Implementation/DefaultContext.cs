@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Threading.Tasks;
     using System.Transactions;
 
@@ -69,6 +70,16 @@
         {
             this.Dispose(false);
         }
+
+        /// <summary>
+        /// The transaction committing event. Raised synchronously before the transaction is committed.
+        /// </summary>
+        public event EventHandler<TransactionCommittingEventArgs> TransactionCommitting;
+
+        /// <summary>
+        /// The transaction committed event. Raised synchronously after the transaction is committed.
+        /// </summary>
+        public event EventHandler<TransactionCommittedEventArgs> TransactionCommitted;
 
         /// <summary>
         /// Gets the unique id of this context.
@@ -372,14 +383,32 @@
         public void Commit()
         {
             Log.Debug(Resources.Committing.Format(this));
-            this.transactionScope.Complete();
-
-            if (this.dependentTransaction != null)
+            var stopwatch = Stopwatch.StartNew();
+            var currentTransaction = Transaction.Current;
+            try
             {
-                this.dependentTransaction.Complete();
-            }
+                this.OnTransactionCommitting(new TransactionCommittingEventArgs(currentTransaction));
+                this.transactionScope.Complete();
 
-            this.IsReady = false;
+                if (this.dependentTransaction != null)
+                {
+                    this.dependentTransaction.Complete();
+                }
+
+                this.OnTransactionCommitted(new TransactionCommittedEventArgs(currentTransaction));
+
+                stopwatch.Stop();
+                Log.Info(Resources.CommittedIn.Format(this, stopwatch.ElapsedMilliseconds));
+            }
+            catch (Exception ex)
+            {
+                Log.Error(Resources.ErrorWhileCommitting, ex);
+                throw;
+            }
+            finally
+            {
+                this.IsReady = false;
+            }
         }
 
         /// <summary>
@@ -450,6 +479,34 @@
                 }
 
                 this.IsReady = false;
+            }
+        }
+
+        /// <summary>
+        /// Raises the <see cref="TransactionCommitting"/> event.
+        /// </summary>
+        /// <param name="e">
+        /// The arguments.
+        /// </param>
+        private void OnTransactionCommitting(TransactionCommittingEventArgs e)
+        {
+            if (this.TransactionCommitting != null)
+            {
+                this.TransactionCommitting(this, e);
+            }
+        }
+
+        /// <summary>
+        /// Raises the <see cref="TransactionCommitted"/> event.
+        /// </summary>
+        /// <param name="e">
+        /// The arguments.
+        /// </param>
+        private void OnTransactionCommitted(TransactionCommittedEventArgs e)
+        {
+            if (this.TransactionCommitted != null)
+            {
+                this.TransactionCommitted(this, e);
             }
         }
 

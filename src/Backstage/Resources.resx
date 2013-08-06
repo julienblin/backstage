@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CommittedIn" xml:space="preserve">
+    <value>{0} committed in {1} milliseconds.</value>
+  </data>
   <data name="Committing" xml:space="preserve">
     <value>Committing {0}...</value>
   </data>
@@ -131,6 +134,9 @@
   </data>
   <data name="Disposing" xml:space="preserve">
     <value>Disposing {0}...</value>
+  </data>
+  <data name="ErrorWhileCommitting" xml:space="preserve">
+    <value>There has been an error while committing transaction. See inner exception for more information.</value>
   </data>
   <data name="ErrorWhileExecutingCommandAsync" xml:space="preserve">
     <value>Error while executing async command {0}. See inner exception for more details.</value>
