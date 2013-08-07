@@ -115,6 +115,15 @@ namespace Backstage {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Domain events handlers should implement IHandleDomainEvent. Actual type: {0}..
+        /// </summary>
+        internal static string DomainHandlersShouldImplementIHandleDomainEvent {
+            get {
+                return ResourceManager.GetString("DomainHandlersShouldImplementIHandleDomainEvent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to There has been an error while committing transaction. See inner exception for more information..
         /// </summary>
         internal static string ErrorWhileCommitting {
@@ -129,6 +138,15 @@ namespace Backstage {
         internal static string ErrorWhileExecutingCommandAsync {
             get {
                 return ResourceManager.GetString("ErrorWhileExecutingCommandAsync", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There has been an error while raising domain event {0} with handler type {1}. See inner exception for more details..
+        /// </summary>
+        internal static string ErrorWhileRaisingDomainEvent {
+            get {
+                return ResourceManager.GetString("ErrorWhileRaisingDomainEvent", resourceCulture);
             }
         }
         
@@ -156,6 +174,24 @@ namespace Backstage {
         internal static string NoCurrentContextFactory {
             get {
                 return ResourceManager.GetString("NoCurrentContextFactory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Scanned {0} and found {1} event handlers..
+        /// </summary>
+        internal static string ScannedAndFoundDomainEventHandlers {
+            get {
+                return ResourceManager.GetString("ScannedAndFoundDomainEventHandlers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Scanning {0}....
+        /// </summary>
+        internal static string Scanning {
+            get {
+                return ResourceManager.GetString("Scanning", resourceCulture);
             }
         }
         

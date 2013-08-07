@@ -135,11 +135,17 @@
   <data name="Disposing" xml:space="preserve">
     <value>Disposing {0}...</value>
   </data>
+  <data name="DomainHandlersShouldImplementIHandleDomainEvent" xml:space="preserve">
+    <value>Domain events handlers should implement IHandleDomainEvent. Actual type: {0}.</value>
+  </data>
   <data name="ErrorWhileCommitting" xml:space="preserve">
     <value>There has been an error while committing transaction. See inner exception for more information.</value>
   </data>
   <data name="ErrorWhileExecutingCommandAsync" xml:space="preserve">
     <value>Error while executing async command {0}. See inner exception for more details.</value>
+  </data>
+  <data name="ErrorWhileRaisingDomainEvent" xml:space="preserve">
+    <value>There has been an error while raising domain event {0} with handler type {1}. See inner exception for more details.</value>
   </data>
   <data name="ErrorWhileStarting" xml:space="preserve">
     <value>Error while starting {0}. See inner exception for more details.</value>
@@ -149,6 +155,12 @@
   </data>
   <data name="NoCurrentContextFactory" xml:space="preserve">
     <value>No current context factory has been defined. You must call ContextFactory.StartNew.</value>
+  </data>
+  <data name="ScannedAndFoundDomainEventHandlers" xml:space="preserve">
+    <value>Scanned {0} and found {1} event handlers.</value>
+  </data>
+  <data name="Scanning" xml:space="preserve">
+    <value>Scanning {0}...</value>
   </data>
   <data name="StartedIn" xml:space="preserve">
     <value>{0} started in {1} milliseconds.</value>
