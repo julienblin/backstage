@@ -12,6 +12,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
+    <NUnitToolPath>$(SrcPath)\packages\NUnit.Runners.2.6.2\tools</NUnitToolPath>
     <MSBuildCommunityTasksPath>$(MSBuildProjectDirectory)</MSBuildCommunityTasksPath>
   </PropertyGroup>
   <Import Project="$(MSBuildProjectDirectory)\MSBuild.Community.Tasks.Targets"/>
@@ -44,6 +45,13 @@
 
   <Target Name="Build" DependsOnTargets="Clean; CreateGlobalAssemblyInfo">
     <MSBuild Projects="$(SolutionFile)" Targets="Rebuild" Properties="Configuration=$(BuildConfiguration)"/>
+  </Target>
+
+  <Target Name="Test" DependsOnTargets="Build">
+    <CreateItem Include="$(BinPath)\**\*.Tests.dll">
+      <Output TaskParameter="Include" ItemName="TestAssembly" />
+    </CreateItem>
+    <NUnit ToolPath="$(NUnitToolPath)" DisableShadowCopy="true" Assemblies="@(TestAssembly)" />
   </Target>
 
 </Project>
