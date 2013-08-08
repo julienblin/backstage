@@ -5,8 +5,6 @@
     using System.Linq;
     using System.Linq.Expressions;
 
-    using Backstage.Implementation;
-
     using Common.Logging;
 
     using NHibernate;

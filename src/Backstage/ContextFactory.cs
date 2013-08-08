@@ -2,8 +2,6 @@
 {
     using System;
 
-    using Backstage.Implementation;
-
     using Common.Logging;
 
     /// <summary>

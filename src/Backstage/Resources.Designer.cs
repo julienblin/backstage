@@ -214,6 +214,15 @@ namespace Backstage {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The selection function of the composite provider factory returned an empty IContextProvider for {0}..
+        /// </summary>
+        internal static string SelectionFunctionReturnedNull {
+            get {
+                return ResourceManager.GetString("SelectionFunctionReturnedNull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} started in {1} milliseconds..
         /// </summary>
         internal static string StartedIn {

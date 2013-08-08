@@ -57,6 +57,7 @@
     <Compile Include="..\..\..\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="CompositeContextProviderFactoryTest.cs" />
     <Compile Include="DomainEventsTest.cs" />
     <Compile Include="Implementation\DefaultContextFactoryTest.cs" />
     <Compile Include="Implementation\DefaultContextTest.cs" />

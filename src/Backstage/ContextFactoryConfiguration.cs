@@ -4,8 +4,6 @@
     using System.Linq;
     using System.Reflection;
 
-    using Backstage.Implementation;
-
     /// <summary>
     /// Configuration object for <see cref="ContextFactory"/>
     /// </summary>

@@ -1,4 +1,4 @@
-﻿namespace Backstage.Implementation
+﻿namespace Backstage
 {
     using System;
 

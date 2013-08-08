@@ -1,4 +1,4 @@
-﻿namespace Backstage.Implementation
+﻿namespace Backstage
 {
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;

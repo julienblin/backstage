@@ -168,6 +168,9 @@
   <data name="Scanning" xml:space="preserve">
     <value>Scanning {0}...</value>
   </data>
+  <data name="SelectionFunctionReturnedNull" xml:space="preserve">
+    <value>The selection function of the composite provider factory returned an empty IContextProvider for {0}.</value>
+  </data>
   <data name="StartedIn" xml:space="preserve">
     <value>{0} started in {1} milliseconds.</value>
   </data>

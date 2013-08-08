@@ -56,6 +56,8 @@
     </Compile>
     <Compile Include="Args.cs" />
     <Compile Include="BackstageException.cs" />
+    <Compile Include="CompositeContextProvider.cs" />
+    <Compile Include="CompositeContextProviderFactory.cs" />
     <Compile Include="Context.cs" />
     <Compile Include="ContextFactory.cs" />
     <Compile Include="ContextFactoryConfiguration.cs" />
@@ -71,10 +73,10 @@
     <Compile Include="IContextProviderFactory.cs" />
     <Compile Include="ICurrentContextHolder.cs" />
     <Compile Include="IEntity.cs" />
-    <Compile Include="Implementation\DefaultContext.cs" />
-    <Compile Include="Implementation\DefaultContextFactory.cs" />
-    <Compile Include="Implementation\PaginationResult.cs" />
-    <Compile Include="Implementation\ThreadStaticCurrentContextHolder.cs" />
+    <Compile Include="DefaultContext.cs" />
+    <Compile Include="DefaultContextFactory.cs" />
+    <Compile Include="PaginationResult.cs" />
+    <Compile Include="ThreadStaticCurrentContextHolder.cs" />
     <Compile Include="IPaginationResult.cs" />
     <Compile Include="IQuery.cs" />
     <Compile Include="IValidatable.cs" />

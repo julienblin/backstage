@@ -4,8 +4,6 @@
     using System.Collections.Generic;
     using System.Linq.Expressions;
 
-    using Backstage.Implementation;
-
     using Common.Logging;
 
     using NHibernate;
