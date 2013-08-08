@@ -90,5 +90,19 @@
         /// A single instance that matches the query, or null if the query returns no results.
         /// </returns>
         T FirstOrDefault();
+
+        /// <summary>
+        /// Runs a query with a DISTINCT clause on the target property.
+        /// </summary>
+        /// <param name="path">
+        /// The path.
+        /// </param>
+        /// <typeparam name="TProperty">
+        /// The type of the property.
+        /// </typeparam>
+        /// <returns>
+        /// The distinct results.
+        /// </returns>
+        IEnumerable<TProperty> Distinct<TProperty>(Expression<Func<T, object>> path);
     }
 }

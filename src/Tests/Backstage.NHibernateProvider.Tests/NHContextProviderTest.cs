@@ -1,6 +1,7 @@
 ﻿namespace Backstage.NHibernateProvider.Tests
 {
     using System;
+    using System.ComponentModel.DataAnnotations;
 
     using Backstage.NHibernateProvider.Events;
     using Backstage.NHibernateProvider.Tests.Entities;
@@ -75,7 +76,7 @@
                     }
                 };
 
-                var employee = new Employee { Age = 25 };
+                var employee = new Employee { Name = "Bar", Age = 25 };
                 context.Add(employee);
 
                 // The query will force a flush.
@@ -100,6 +101,19 @@
 
                 employeeDeletedEvent.Should().NotBeNull();
                 employeeDeletedEvent.Entity.Should().Be(employee);
+            }
+        }
+
+        [Test]
+        public void It_should_validate_data_annotations()
+        {
+            using (var context = ContextFactory.Current.StartNewContext())
+            {
+                var employee = new Employee { Name = "123456789012345678901234567890123456789012345678901234567890" };
+                context.Add(employee);
+                
+                // The query will force a flush.
+                context.Invoking(x => x.Fulfill(new DumbQuery()).List()).ShouldThrow<ValidationException>().WithMessage("Name", ComparisonMode.Substring);
             }
         }
 

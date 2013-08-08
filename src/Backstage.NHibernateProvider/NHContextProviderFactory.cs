@@ -204,6 +204,10 @@
                 resultConfig.SetProperty(key, this.configuration.NHProperties[key]);
             }
 
+            var dataAnnotationsEventListener = new DataAnnotationsEventListener();
+            resultConfig.SetListener(ListenerType.PreInsert, dataAnnotationsEventListener);
+            resultConfig.SetListener(ListenerType.PreUpdate, dataAnnotationsEventListener);
+
             if (this.configuration.RaiseDomainEvents)
             {
                 var domainEventListener = new DomainEventsEventListener();

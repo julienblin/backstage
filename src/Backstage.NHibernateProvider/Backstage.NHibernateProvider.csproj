@@ -72,6 +72,7 @@
     <Compile Include="Conventions\DefaultForeignKeyConvention.cs" />
     <Compile Include="Conventions\RequiredAttributePropertyConvention.cs" />
     <Compile Include="DatabaseType.cs" />
+    <Compile Include="Events\DataAnnotationsEventListener.cs" />
     <Compile Include="Events\EntityDeletedEvent.cs" />
     <Compile Include="Events\EntityInsertedEvent.cs" />
     <Compile Include="Events\EntityUpdatedEvent.cs" />

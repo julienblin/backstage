@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using System.ComponentModel.DataAnnotations;
 
     public class Employee : NHEntity<Guid>
     {
@@ -13,6 +14,8 @@
             this.vacancies = new Collection<Vacancy>();
         }
 
+        [Required]
+        [StringLength(50)]
         public virtual string Name { get; set; }
 
         public virtual int Age { get; set; }

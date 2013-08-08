@@ -82,6 +82,23 @@
         }
 
         /// <summary>
+        /// Runs a query with a DISTINCT clause on the target property.
+        /// </summary>
+        /// <param name="path">
+        /// The path.
+        /// </param>
+        /// <typeparam name="TProperty">
+        /// The type of the property.
+        /// </typeparam>
+        /// <returns>
+        /// The distinct results.
+        /// </returns>
+        public override IEnumerable<TProperty> Distinct<TProperty>(Expression<Func<T, object>> path)
+        {
+            return this.BuildFinalQueryOver().Select(Projections.Distinct(Projections.Property(path))).List<TProperty>();
+        }
+
+        /// <summary>
         /// Runs the query and returns paginated results.
         /// </summary>
         /// <param name="page">

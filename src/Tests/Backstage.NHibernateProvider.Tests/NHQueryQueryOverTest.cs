@@ -109,6 +109,21 @@
             }
         }
 
+        [Test]
+        public void It_should_execute_and_Distinct()
+        {
+            using (var context = ContextFactory.Current.StartNewContext())
+            {
+                context.Add(new Employee { Name = "Foo" });
+                context.Add(new Employee { Name = "Foo" });
+                context.Add(new Employee { Name = "Bar" });
+
+                var result = context.Fulfill(new NHQueryQueryOverSample()).OrderBy(x => x.Name).Distinct<string>(x => x.Name);
+                result.Should().HaveCount(2);
+                result.First().Should().Be("Bar");
+            }
+        }
+
         private class NHQueryQueryOverSample : NHQueryQueryOver<Employee>
         {
             public string NameLike { get; set; }

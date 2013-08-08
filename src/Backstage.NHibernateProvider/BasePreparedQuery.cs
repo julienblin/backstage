@@ -182,6 +182,20 @@
         public abstract T FirstOrDefault();
 
         /// <summary>
+        /// Runs a query with a DISTINCT clause on the target property.
+        /// </summary>
+        /// <param name="path">
+        /// The path.
+        /// </param>
+        /// <typeparam name="TProperty">
+        /// The type of the property.
+        /// </typeparam>
+        /// <returns>
+        /// The distinct results.
+        /// </returns>
+        public abstract IEnumerable<TProperty> Distinct<TProperty>(Expression<Func<T, object>> path);
+
+        /// <summary>
         /// Must be implemented to provide pagination results. Arguments will be curated.
         /// </summary>
         /// <param name="page">
