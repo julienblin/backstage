@@ -142,7 +142,7 @@ namespace Backstage {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to There has been an error while raising domain event {0} with handler type {1}. See inner exception for more details..
+        ///   Looks up a localized string similar to There has been an error while raising domain event {0} with handler {1}. See inner exception for more details..
         /// </summary>
         internal static string ErrorWhileRaisingDomainEvent {
             get {

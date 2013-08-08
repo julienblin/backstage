@@ -1,8 +1,10 @@
 ﻿namespace Backstage
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using System.Threading;
 
     using Common.Logging;
 
@@ -22,29 +24,14 @@
         private static readonly ILog Log = LogManager.GetCurrentClassLogger();
 
         /// <summary>
-        /// The sync root.
+        /// The reader writer lock.
         /// </summary>
-        private static readonly object SyncRoot = new object();
+        private static readonly ReaderWriterLockSlim ReaderWriterLock = new ReaderWriterLockSlim();
 
         /// <summary>
-        /// The global subscriptions.
+        /// The handlers.
         /// </summary>
-        private static readonly IDictionary<Type, IList<Type>> Subscriptions = new Dictionary<Type, IList<Type>>();
-
-        /// <summary>
-        /// Gets a copy of the subscriptions.
-        /// </summary>
-        /// <returns>
-        /// The subscriptions.
-        /// </returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "OK here - this is a copy.")]
-        public static IDictionary<Type, IList<Type>> GetSubscriptions()
-        {
-            lock (SyncRoot)
-            {
-                return new ReadOnlyDictionary<Type, IList<Type>>(Subscriptions);
-            }
-        }
+        private static readonly IDictionary<Type, ArrayList> Handlers = new Dictionary<Type, ArrayList>();
 
         /// <summary>
         /// Raises the <paramref name="domainEvent"/> synchronously.
@@ -60,123 +47,180 @@
             where T : class, IDomainEvent
         {
             domainEvent.ThrowIfNull("domainEvent");
-            lock (SyncRoot)
+            ReaderWriterLock.EnterReadLock();
+            try
             {
-                if (!Subscriptions.ContainsKey(domainEvent.GetType()))
+                if (!Handlers.ContainsKey(typeof(T)))
                 {
                     return;
                 }
 
-                foreach (var subscriptionType in Subscriptions[domainEvent.GetType()])
+                foreach (var handler in Handlers[typeof(T)])
                 {
-                    IHandleDomainEvent<T> subscription = null;
                     try
                     {
-                        subscription = (IHandleDomainEvent<T>)Activator.CreateInstance(subscriptionType);
-                        subscription.Handle(domainEvent);
+                        ((IHandleDomainEvent<T>)handler).Handle(domainEvent);
                     }
                     catch (Exception ex)
                     {
-                        Log.Error(Resources.ErrorWhileRaisingDomainEvent.Format(domainEvent, subscriptionType), ex);
-                        throw new BackstageException(
-                            Resources.ErrorWhileRaisingDomainEvent.Format(domainEvent, subscriptionType), ex);
-                    }
-                    finally
-                    {
-// ReSharper disable SuspiciousTypeConversion.Global
-                        var disposableSubscription = subscription as IDisposable;
-// ReSharper restore SuspiciousTypeConversion.Global
-                        if (disposableSubscription != null)
-                        {
-                            disposableSubscription.Dispose();
-                        }
+                        Log.Error(Resources.ErrorWhileRaisingDomainEvent.Format(domainEvent, handler), ex);
+                        throw new BackstageException(Resources.ErrorWhileRaisingDomainEvent.Format(domainEvent, handler), ex);
                     }
                 }
+            }
+            finally
+            {
+                ReaderWriterLock.ExitReadLock();
             }
         }
 
         /// <summary>
-        /// Subscribes to a domain event.
+        /// Get the handlers for the <typeparamref name="T"/> (type od <see cref="IDomainEvent"/>).
         /// </summary>
         /// <typeparam name="T">
-        /// The handler type.
+        /// The type of <see cref="IDomainEvent"/>.
         /// </typeparam>
-        /// <typeparam name="TEvent">
-        /// The event type.
-        /// </typeparam>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter", Justification = "This is the case.")]
-        public static void Subscribe<T, TEvent>()
-            where T : IHandleDomainEvent<TEvent>
-            where TEvent : IDomainEvent
+        /// <returns>
+        /// The handlers.
+        /// </returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter", Justification = "Ok here.")]
+        public static ArrayList GetHandlers<T>()
+            where T : IDomainEvent
         {
-            Subscribe(typeof(T));
+            return GetHandlers(typeof(T));
         }
 
         /// <summary>
-        /// Subscribes to a domain event.
+        /// Get the handlers for the <paramref name="domainEventType"/>.
         /// </summary>
-        /// <param name="handlerType">
-        /// The handler type. Must implement <see cref="IHandleDomainEvent{T}"/>.
+        /// <param name="domainEventType">
+        /// The <see cref="IDomainEvent"/> type.
         /// </param>
-        public static void Subscribe(Type handlerType)
+        /// <returns>
+        /// The handlers.
+        /// </returns>
+        public static ArrayList GetHandlers(Type domainEventType)
         {
-            handlerType.ThrowIfNull("handlerType");
-            var domainEventType = GetDomainEventType(handlerType);
-
-            lock (SyncRoot)
+            ReaderWriterLock.EnterReadLock();
+            try
             {
-                if (!Subscriptions.ContainsKey(domainEventType))
-                {
-                    Subscriptions[domainEventType] = new List<Type>();
-                }
-
-                if (!Subscriptions[domainEventType].Contains(handlerType))
-                {
-                    Subscriptions[domainEventType].Add(handlerType);
-                }
+                return !Handlers.ContainsKey(domainEventType) ? new ArrayList() : new ArrayList(Handlers[domainEventType]);
+            }
+            finally
+            {
+                ReaderWriterLock.ExitReadLock();
             }
         }
 
         /// <summary>
-        /// Unsubscribes to a domain event.
+        /// Subscribe to an event.
         /// </summary>
+        /// <param name="handler">
+        /// The handler.
+        /// </param>
         /// <typeparam name="T">
-        /// The handler type.
+        /// The type of event.
         /// </typeparam>
-        /// <typeparam name="TEvent">
-        /// The event type.
-        /// </typeparam>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter", Justification = "This is the case.")]
-        public static void Unsubscribe<T, TEvent>()
-            where T : IHandleDomainEvent<TEvent>
-            where TEvent : IDomainEvent
+        public static void Subscribe<T>(IHandleDomainEvent<T> handler)
+            where T : IDomainEvent
         {
-            Unsubscribe(typeof(T));
+            Subscribe((object)handler);
         }
 
         /// <summary>
-        /// Unsubscribes to domain events.
+        /// Subscribe to an event. Non-generic version.
         /// </summary>
-        /// <param name="handlerType">
-        /// The handler type.
+        /// <param name="handler">
+        /// The handler. Must be an <see cref="IHandleDomainEvent{T}"/>.
         /// </param>
-        public static void Unsubscribe(Type handlerType)
+        public static void Subscribe(object handler)
         {
-            handlerType.ThrowIfNull("handlerType");
-            var domainEventType = GetDomainEventType(handlerType);
-
-            lock (SyncRoot)
+            handler.ThrowIfNull("handler");
+            var domainEventType = GetDomainEventType(handler.GetType());
+            ReaderWriterLock.EnterWriteLock();
+            try
             {
-                if (!Subscriptions.ContainsKey(domainEventType))
+                if (!Handlers.ContainsKey(domainEventType))
+                {
+                    Handlers[domainEventType] = new ArrayList();
+                }
+
+                if (!Handlers[domainEventType].Contains(handler))
+                {
+                    Handlers[domainEventType].Add(handler);
+                }
+            }
+            finally
+            {
+                ReaderWriterLock.ExitWriteLock();
+            }
+        }
+
+        /// <summary>
+        /// Unsubscribe a handler.
+        /// </summary>
+        /// <param name="handler">
+        /// The handler.
+        /// </param>
+        /// <typeparam name="T">
+        /// The type of event.
+        /// </typeparam>
+        public static void Unsubscribe<T>(IHandleDomainEvent<T> handler)
+            where T : IDomainEvent
+        {
+            Unsubscribe((object)handler);
+        }
+
+        /// <summary>
+        /// Unsubscribe a handler.
+        /// </summary>
+        /// <param name="handler">
+        /// The handler. Must be an <see cref="IHandleDomainEvent{T}"/>.
+        /// </param>
+        public static void Unsubscribe(object handler)
+        {
+            handler.ThrowIfNull("handler");
+            var domainEventType = GetDomainEventType(handler.GetType());
+            ReaderWriterLock.EnterWriteLock();
+            try
+            {
+                if (!Handlers.ContainsKey(domainEventType))
                 {
                     return;
                 }
 
-                Subscriptions[domainEventType].Remove(handlerType);
-                if (Subscriptions[domainEventType].Count == 0)
+                if (Handlers[domainEventType].Contains(handler))
                 {
-                    Subscriptions.Remove(domainEventType);
+                    Handlers[domainEventType].Remove(handler);
                 }
+            }
+            finally
+            {
+                ReaderWriterLock.ExitWriteLock();
+            }
+        }
+
+        /// <summary>
+        /// Unsubscribe all handlers for an event.
+        /// </summary>
+        /// <typeparam name="T">
+        /// The type of event.
+        /// </typeparam>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter", Justification = "Ok here.")]
+        public static void Unsubscribe<T>()
+            where T : IDomainEvent
+        {
+            ReaderWriterLock.EnterWriteLock();
+            try
+            {
+                if (Handlers.ContainsKey(typeof(T)))
+                {
+                    Handlers.Remove(typeof(T));
+                }
+            }
+            finally
+            {
+                ReaderWriterLock.ExitWriteLock();
             }
         }
 

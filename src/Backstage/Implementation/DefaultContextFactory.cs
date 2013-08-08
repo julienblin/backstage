@@ -88,7 +88,7 @@
                     
                     this.configuration.ContextProviderFactory.EnforceValidation();
                     this.configuration.ContextProviderFactory.Start(this);
-                    this.ScanDomainEventHandlersAssemblies(true);
+                    this.ScanDomainEventHandlersAssemblies();
 
                     stopwatch.Stop();
                     Log.Info(Resources.StartedIn.Format(this.configuration.ContextProviderFactory, stopwatch.ElapsedMilliseconds));
@@ -166,7 +166,6 @@
         {
             if (disposing)
             {
-                this.ScanDomainEventHandlersAssemblies(false);
                 this.configuration.ContextProviderFactory.Dispose();
             }
         }
@@ -174,27 +173,21 @@
         /// <summary>
         /// Scans <see cref="ContextFactoryConfiguration.DomainEventHandlersAssemblies"/> to register domain events handlers.
         /// </summary>
-        /// <param name="subscribe">
-        /// True to subscribe, false to unsubscribe.
-        /// </param>
-        private void ScanDomainEventHandlersAssemblies(bool subscribe)
+        private void ScanDomainEventHandlersAssemblies()
         {
             foreach (var assembly in this.configuration.DomainEventHandlersAssemblies)
             {
                 Log.Debug(Resources.Scanning.Format(assembly));
-                var domainEventHandlers = assembly.GetTypes()
+                var domainEventHandlerTypes = assembly.GetTypes()
                                                   .Where(x => x.GetInterface(DomainEvents.HandleDomainEventsMangledName) != null)
                                                   .ToList();
-                if (subscribe)
+
+                foreach (var handlerType in domainEventHandlerTypes)
                 {
-                    domainEventHandlers.ForEach(DomainEvents.Subscribe);
-                }
-                else
-                {
-                    domainEventHandlers.ForEach(DomainEvents.Unsubscribe);
+                    DomainEvents.Subscribe(Activator.CreateInstance(handlerType));
                 }
 
-                Log.Debug(Resources.ScannedAndFoundDomainEventHandlers.Format(assembly, domainEventHandlers.Count));
+                Log.Debug(Resources.ScannedAndFoundDomainEventHandlers.Format(assembly, domainEventHandlerTypes.Count));
             }
         }
     }

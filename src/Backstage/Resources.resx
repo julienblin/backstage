@@ -145,7 +145,7 @@
     <value>Error while executing async command {0}. See inner exception for more details.</value>
   </data>
   <data name="ErrorWhileRaisingDomainEvent" xml:space="preserve">
-    <value>There has been an error while raising domain event {0} with handler type {1}. See inner exception for more details.</value>
+    <value>There has been an error while raising domain event {0} with handler {1}. See inner exception for more details.</value>
   </data>
   <data name="ErrorWhileStarting" xml:space="preserve">
     <value>Error while starting {0}. See inner exception for more details.</value>

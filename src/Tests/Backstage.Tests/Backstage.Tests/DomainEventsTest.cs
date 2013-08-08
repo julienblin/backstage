@@ -12,7 +12,7 @@
     public class DomainEventsTest
     {
         [Test]
-        public void It_should_register_assemblies_on_ContextFactory_creation_and_unsubscribe_on_Dispose()
+        public void It_should_register_assemblies_on_ContextFactory_creation()
         {
             var contextFactoryProviderMock = new Mock<IContextProviderFactory>();
             using (ContextFactory.StartNew(
@@ -21,21 +21,20 @@
                         DomainEventHandlersAssemblies = new[] { typeof(DomainEventsTest).Assembly }
                     }))
             {
-                DomainEvents.GetSubscriptions().Should().HaveCount(1);
+                DomainEvents.GetHandlers<DomainEventSample>().Should().HaveCount(1);
             }
-
-            DomainEvents.GetSubscriptions().Should().HaveCount(0);
         }
 
         [Test]
         public void It_should_raise_events()
         {
-            DomainEvents.Subscribe<DomainEventHandlerSample, DomainEventSample>();
+            var eventHandler = new DomainEventHandlerSample();
+            DomainEvents.Subscribe(eventHandler);
             DomainEvents.Raise(new DomainEventSample());
 
             DomainEventHandlerSample.ReceivedEvents.Should().HaveCount(1);
 
-            DomainEvents.Unsubscribe<DomainEventHandlerSample, DomainEventSample>();
+            DomainEvents.Unsubscribe(eventHandler);
             DomainEvents.Raise(new DomainEventSample());
 
             DomainEventHandlerSample.ReceivedEvents.Should().HaveCount(1);
