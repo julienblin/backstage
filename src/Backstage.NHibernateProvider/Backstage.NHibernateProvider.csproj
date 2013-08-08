@@ -72,6 +72,10 @@
     <Compile Include="Conventions\DefaultForeignKeyConvention.cs" />
     <Compile Include="Conventions\RequiredAttributePropertyConvention.cs" />
     <Compile Include="DatabaseType.cs" />
+    <Compile Include="Events\EntityDeletedEvent.cs" />
+    <Compile Include="Events\EntityInsertedEvent.cs" />
+    <Compile Include="Events\EntityUpdatedEvent.cs" />
+    <Compile Include="Events\DomainEventsEventListener.cs" />
     <Compile Include="INHQuery.cs" />
     <Compile Include="IPreparedQuery.cs" />
     <Compile Include="Logs\NHCommonInternalLogger.cs" />

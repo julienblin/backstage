@@ -26,7 +26,7 @@
         }
 
         [Test]
-        public void It_should_raise_events()
+        public void It_should_contact_subscriptions()
         {
             var eventHandler = new DomainEventHandlerSample();
             DomainEvents.Subscribe(eventHandler);
@@ -38,6 +38,16 @@
             DomainEvents.Raise(new DomainEventSample());
 
             DomainEventHandlerSample.ReceivedEvents.Should().HaveCount(1);
+        }
+
+        [Test]
+        public void It_should_raise_events()
+        {
+            IDomainEvent receivedEvent = null;
+            DomainEvents.DomainEventRaised += (sender, args) => receivedEvent = args.DomainEvent;
+            DomainEvents.Raise(new DomainEventSample());
+
+            receivedEvent.Should().Be(receivedEvent);
         }
 
         public class DomainEventSample : IDomainEvent

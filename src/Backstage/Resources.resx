@@ -150,11 +150,17 @@
   <data name="ErrorWhileStarting" xml:space="preserve">
     <value>Error while starting {0}. See inner exception for more details.</value>
   </data>
+  <data name="EventRaised" xml:space="preserve">
+    <value>Event {0} raised.</value>
+  </data>
   <data name="NoCurrentContext" xml:space="preserve">
     <value>The current context holder ({0}) returned no current context.</value>
   </data>
   <data name="NoCurrentContextFactory" xml:space="preserve">
     <value>No current context factory has been defined. You must call ContextFactory.StartNew.</value>
+  </data>
+  <data name="RaisingEvent" xml:space="preserve">
+    <value>Raising event {0}...</value>
   </data>
   <data name="ScannedAndFoundDomainEventHandlers" xml:space="preserve">
     <value>Scanned {0} and found {1} event handlers.</value>

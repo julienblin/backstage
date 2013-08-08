@@ -59,6 +59,7 @@
     <Compile Include="Context.cs" />
     <Compile Include="ContextFactory.cs" />
     <Compile Include="ContextFactoryConfiguration.cs" />
+    <Compile Include="DomainEventRaisedEventArgs.cs" />
     <Compile Include="DomainEvents.cs" />
     <Compile Include="IDomainEvent.cs" />
     <Compile Include="IHandleDomainEvent.cs" />

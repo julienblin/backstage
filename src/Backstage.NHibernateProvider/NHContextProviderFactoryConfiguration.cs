@@ -26,14 +26,6 @@
         private IEnumerable<Assembly> conventionAssemblies;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="NHContextProviderFactoryConfiguration"/> class.
-        /// </summary>
-        public NHContextProviderFactoryConfiguration()
-        {
-            this.AutoUpdateSchemaOnStart = false;
-        }
-
-        /// <summary>
         /// Gets or sets the connection string.
         /// </summary>
         [Required]
@@ -46,9 +38,14 @@
 
         /// <summary>
         /// Gets or sets a value indicating whether to auto-update the database schema on start.
-        /// Default: false. NOT RECOMMENDED IN PRODUCTION.
+        /// NOT RECOMMENDED IN PRODUCTION.
         /// </summary>
         public bool AutoUpdateSchemaOnStart { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to raise domain events.
+        /// </summary>
+        public bool RaiseDomainEvents { get; set; }
 
         /// <summary>
         /// Gets or sets NHibernate properties.

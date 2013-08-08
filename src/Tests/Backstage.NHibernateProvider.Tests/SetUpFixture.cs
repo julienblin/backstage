@@ -32,6 +32,7 @@
                                                          ConnectionString = ConnectionString,
                                                          MappingAssemblies = new[] { typeof(SetUpFixture).Assembly },
                                                          AutoUpdateSchemaOnStart = true,
+                                                         RaiseDomainEvents = true,
                                                          NHProperties = new Dictionary<string, string>
                                                                             {
                                                                                 { NHibernate.Cfg.Environment.FormatSql, "true" }

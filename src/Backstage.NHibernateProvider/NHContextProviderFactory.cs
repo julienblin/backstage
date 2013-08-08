@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
+    using Backstage.NHibernateProvider.Events;
     using Backstage.NHibernateProvider.Logs;
 
     using Common.Logging;
@@ -13,6 +14,7 @@
 
     using NHibernate;
     using NHibernate.Cfg;
+    using NHibernate.Event;
     using NHibernate.Tool.hbm2ddl;
 
     /// <summary>
@@ -152,6 +154,7 @@
         /// <returns>
         /// The <see cref="Configuration"/>.
         /// </returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "NHibernate configuration necessitates a lot of types.")]
         protected virtual Configuration BuildNHConfiguration()
         {
             Log.Debug(Resources.BuildingNHibernateConfiguration);
@@ -199,6 +202,14 @@
             foreach (var key in this.configuration.NHProperties.Keys)
             {
                 resultConfig.SetProperty(key, this.configuration.NHProperties[key]);
+            }
+
+            if (this.configuration.RaiseDomainEvents)
+            {
+                var domainEventListener = new DomainEventsEventListener();
+                resultConfig.SetListener(ListenerType.PostInsert, domainEventListener);
+                resultConfig.SetListener(ListenerType.PostUpdate, domainEventListener);
+                resultConfig.SetListener(ListenerType.PostDelete, domainEventListener);
             }
 
             return resultConfig;

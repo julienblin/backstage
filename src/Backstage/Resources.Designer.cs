@@ -160,6 +160,15 @@ namespace Backstage {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Event {0} raised..
+        /// </summary>
+        internal static string EventRaised {
+            get {
+                return ResourceManager.GetString("EventRaised", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The current context holder ({0}) returned no current context..
         /// </summary>
         internal static string NoCurrentContext {
@@ -174,6 +183,15 @@ namespace Backstage {
         internal static string NoCurrentContextFactory {
             get {
                 return ResourceManager.GetString("NoCurrentContextFactory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Raising event {0}....
+        /// </summary>
+        internal static string RaisingEvent {
+            get {
+                return ResourceManager.GetString("RaisingEvent", resourceCulture);
             }
         }
         

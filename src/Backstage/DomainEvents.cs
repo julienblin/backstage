@@ -34,6 +34,11 @@
         private static readonly IDictionary<Type, ArrayList> Handlers = new Dictionary<Type, ArrayList>();
 
         /// <summary>
+        /// The domain event raised.
+        /// </summary>
+        public static event EventHandler<DomainEventRaisedEventArgs> DomainEventRaised;
+
+        /// <summary>
         /// Raises the <paramref name="domainEvent"/> synchronously.
         /// </summary>
         /// <param name="domainEvent">
@@ -48,8 +53,11 @@
         {
             domainEvent.ThrowIfNull("domainEvent");
             ReaderWriterLock.EnterReadLock();
+            Log.Debug(Resources.RaisingEvent.Format(domainEvent));
             try
             {
+                OnDomainEventRaised(new DomainEventRaisedEventArgs(domainEvent));
+
                 if (!Handlers.ContainsKey(typeof(T)))
                 {
                     return;
@@ -67,6 +75,8 @@
                         throw new BackstageException(Resources.ErrorWhileRaisingDomainEvent.Format(domainEvent, handler), ex);
                     }
                 }
+
+                Log.Debug(Resources.EventRaised.Format(domainEvent));
             }
             finally
             {
@@ -246,6 +256,21 @@
 
             var domainEventType = baseInterfaceType.GetGenericArguments()[0];
             return domainEventType;
+        }
+
+        /// <summary>
+        /// The on domain event raised.
+        /// </summary>
+        /// <param name="e">
+        /// The arguments.
+        /// </param>
+        private static void OnDomainEventRaised(DomainEventRaisedEventArgs e)
+        {
+            var handler = DomainEventRaised;
+            if (handler != null)
+            {
+                handler(null, e);
+            }
         }
     }
 }
