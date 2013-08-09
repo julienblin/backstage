@@ -54,17 +54,23 @@
     <Compile Include="..\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="AnonymousUser.cs" />
     <Compile Include="Args.cs" />
+    <Compile Include="AuthorizationResult.cs" />
     <Compile Include="BackstageException.cs" />
     <Compile Include="CompositeContextProvider.cs" />
     <Compile Include="CompositeContextProviderFactory.cs" />
     <Compile Include="Context.cs" />
     <Compile Include="ContextFactory.cs" />
     <Compile Include="ContextFactoryConfiguration.cs" />
+    <Compile Include="DefaultAuthorizationResult.cs" />
     <Compile Include="DomainEventRaisedEventArgs.cs" />
     <Compile Include="DomainEvents.cs" />
     <Compile Include="IDomainEvent.cs" />
     <Compile Include="IHandleDomainEvent.cs" />
+    <Compile Include="ISecurityProvider.cs" />
+    <Compile Include="IUser.cs" />
+    <Compile Include="NoSecurityProvider.cs" />
     <Compile Include="TransactionCommittedEventArgs.cs" />
     <Compile Include="ICommand.cs" />
     <Compile Include="IContext.cs" />

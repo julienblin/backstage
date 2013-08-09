@@ -1,4 +1,4 @@
-﻿namespace Backstage.Tests.Implementation
+﻿namespace Backstage.Tests
 {
     using System.Transactions;
 
@@ -14,6 +14,10 @@
         private Mock<IContextProviderFactory> contextProviderFactoryMock;
 
         private Mock<IContextProvider> contextProviderMock;
+
+        private Mock<IUser> userMock;
+
+        private Mock<ISecurityProvider> securityProviderMock;
             
         [SetUp]
         public void SetUp()
@@ -21,7 +25,15 @@
             this.contextProviderFactoryMock = new Mock<IContextProviderFactory>();
             this.contextProviderMock = new Mock<IContextProvider>();
             this.contextProviderFactoryMock.Setup(x => x.CreateContextProvider(It.IsAny<IContext>())).Returns(this.contextProviderMock.Object);
-            ContextFactory.StartNew(new ContextFactoryConfiguration(this.contextProviderFactoryMock.Object));
+
+            this.securityProviderMock = new Mock<ISecurityProvider>();
+            this.userMock = new Mock<IUser>();
+            this.securityProviderMock.Setup(x => x.GetCurrentUser(It.IsAny<IContext>())).Returns(this.userMock.Object);
+
+            ContextFactory.StartNew(new ContextFactoryConfiguration(this.contextProviderFactoryMock.Object)
+                                        {
+                                            SecurityProvider = this.securityProviderMock.Object
+                                        });
         }
 
         [Test]
@@ -176,6 +188,23 @@
                 context.ShouldRaise("TransactionCommitted")
                        .WithSender(context)
                        .WithArgs<TransactionCommittedEventArgs>(x => x.Transaction != null);
+            }
+        }
+
+        [Test]
+        public void It_should_relay_calls_to_security_provider()
+        {
+            using (var context = ContextFactory.Current.StartNewContext())
+            {
+                context.CurrentUser.Should().Be(this.userMock.Object);
+                this.securityProviderMock.Verify(x => x.GetCurrentUser(context));
+
+                context.IsAuthorized("foo");
+                this.securityProviderMock.Verify(x => x.GetAuthorizationResult(context, "foo"));
+
+                var target = new object();
+                context.IsAuthorized("foo", target);
+                this.securityProviderMock.Verify(x => x.GetAuthorizationResult(context, "foo", target));
             }
         }
     }

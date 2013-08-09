@@ -61,6 +61,15 @@ namespace Backstage {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Anonymous.
+        /// </summary>
+        internal static string Anonymous {
+            get {
+                return ResourceManager.GetString("Anonymous", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} committed in {1} milliseconds..
         /// </summary>
         internal static string CommittedIn {
@@ -214,6 +223,24 @@ namespace Backstage {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The security provider {0} returned no result for operation {1}. Assuming a false, but you should have a look..
+        /// </summary>
+        internal static string SecurityProviderReturnedNoResult {
+            get {
+                return ResourceManager.GetString("SecurityProviderReturnedNoResult", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The security provider {0} returned no result for operation {1} and target {2}. Assuming a false, but you should have a look..
+        /// </summary>
+        internal static string SecurityProviderReturnedNoResultWithTarget {
+            get {
+                return ResourceManager.GetString("SecurityProviderReturnedNoResultWithTarget", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The selection function of the composite provider factory returned an empty IContextProvider for {0}..
         /// </summary>
         internal static string SelectionFunctionReturnedNull {
@@ -264,6 +291,15 @@ namespace Backstage {
         internal static string Using {
             get {
                 return ResourceManager.GetString("Using", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No security provider has been specified. All operations are authorized..
+        /// </summary>
+        internal static string UsingDefaultNoSecurityProvider {
+            get {
+                return ResourceManager.GetString("UsingDefaultNoSecurityProvider", resourceCulture);
             }
         }
     }

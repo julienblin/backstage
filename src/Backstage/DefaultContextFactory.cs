@@ -75,6 +75,17 @@
         }
 
         /// <summary>
+        /// Gets the <see cref="ISecurityProvider"/>.
+        /// </summary>
+        public ISecurityProvider SecurityProvider
+        {
+            get
+            {
+                return this.configuration.SecurityProvider;
+            }
+        }
+
+        /// <summary>
         /// Starts the <see cref="IContextFactory"/>.
         /// </summary>
         public void Start()

@@ -51,6 +51,11 @@
         IDictionary<string, object> Values { get; }
 
         /// <summary>
+        /// Gets the current logged-in user.
+        /// </summary>
+        IUser CurrentUser { get; }
+
+        /// <summary>
         /// Adds an entity to the context.
         /// </summary>
         /// <param name="entity">
@@ -156,6 +161,32 @@
         /// A <see cref="Task{TResult}"/> which executes the work.
         /// </returns>
         Task<T> ExecuteAsync<T>(ICommand<T> command, bool dependentTrans = true);
+
+        /// <summary>
+        /// Returns the <see cref="AuthorizationResult"/> related to the <paramref name="operation"/>.
+        /// </summary>
+        /// <param name="operation">
+        /// The operation.
+        /// </param>
+        /// <returns>
+        /// The <see cref="AuthorizationResult"/>.
+        /// </returns>
+        AuthorizationResult IsAuthorized(string operation);
+
+        /// <summary>
+        /// Returns the <see cref="AuthorizationResult"/> related to the <paramref name="operation"/> and
+        /// the <paramref name="target"/>.
+        /// </summary>
+        /// <param name="operation">
+        /// The operation.
+        /// </param>
+        /// <param name="target">
+        /// The target.
+        /// </param>
+        /// <returns>
+        /// The <see cref="AuthorizationResult"/>.
+        /// </returns>
+        AuthorizationResult IsAuthorized(string operation, object target);
 
         /// <summary>
         /// Starts the context.

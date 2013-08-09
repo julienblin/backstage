@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Anonymous" xml:space="preserve">
+    <value>Anonymous</value>
+  </data>
   <data name="CommittedIn" xml:space="preserve">
     <value>{0} committed in {1} milliseconds.</value>
   </data>
@@ -168,6 +171,12 @@
   <data name="Scanning" xml:space="preserve">
     <value>Scanning {0}...</value>
   </data>
+  <data name="SecurityProviderReturnedNoResult" xml:space="preserve">
+    <value>The security provider {0} returned no result for operation {1}. Assuming a false, but you should have a look.</value>
+  </data>
+  <data name="SecurityProviderReturnedNoResultWithTarget" xml:space="preserve">
+    <value>The security provider {0} returned no result for operation {1} and target {2}. Assuming a false, but you should have a look.</value>
+  </data>
   <data name="SelectionFunctionReturnedNull" xml:space="preserve">
     <value>The selection function of the composite provider factory returned an empty IContextProvider for {0}.</value>
   </data>
@@ -185,5 +194,8 @@
   </data>
   <data name="Using" xml:space="preserve">
     <value>Using {0}.</value>
+  </data>
+  <data name="UsingDefaultNoSecurityProvider" xml:space="preserve">
+    <value>No security provider has been specified. All operations are authorized.</value>
   </data>
 </root>

@@ -59,8 +59,9 @@
     </Compile>
     <Compile Include="CompositeContextProviderFactoryTest.cs" />
     <Compile Include="DomainEventsTest.cs" />
-    <Compile Include="Implementation\DefaultContextFactoryTest.cs" />
-    <Compile Include="Implementation\DefaultContextTest.cs" />
+    <Compile Include="DefaultContextFactoryTest.cs" />
+    <Compile Include="DefaultContextTest.cs" />
+    <Compile Include="NoSecurityProviderTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SetUpFixture.cs" />
   </ItemGroup>

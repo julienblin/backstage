@@ -25,6 +25,11 @@
         private IEnumerable<Assembly> domainEventHandlersAssemblies;
 
         /// <summary>
+        /// The security provider.
+        /// </summary>
+        private ISecurityProvider securityProvider;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="ContextFactoryConfiguration"/> class.
         /// </summary>
         /// <param name="contextProviderFactory">
@@ -87,6 +92,22 @@
             set
             {
                 this.domainEventHandlersAssemblies = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the security provider.
+        /// </summary>
+        public ISecurityProvider SecurityProvider
+        {
+            get
+            {
+                return this.securityProvider ?? (this.securityProvider = new NoSecurityProvider());
+            }
+
+            set
+            {
+                this.securityProvider = value;
             }
         }
     }

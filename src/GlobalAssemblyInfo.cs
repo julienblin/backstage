@@ -15,8 +15,8 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 [assembly: AssemblyProduct("Backstage")]
-[assembly: AssemblyVersion("0.1.0")]
-[assembly: AssemblyInformationalVersion("0.1.0-11-g97f6b0c")]
+[assembly: AssemblyVersion("0.2.0")]
+[assembly: AssemblyInformationalVersion("0.2.0-0-g10069ba")]
 [assembly: ComVisible(false)]
 [assembly: CLSCompliant(true)]
 [assembly: NeutralResourcesLanguage("en")]

@@ -26,6 +26,11 @@
         ICurrentContextHolder CurrentContextHolder { get; }
 
         /// <summary>
+        /// Gets the <see cref="ISecurityProvider"/>.
+        /// </summary>
+        ISecurityProvider SecurityProvider { get; }
+
+        /// <summary>
         /// Starts the <see cref="IContextFactory"/>.
         /// </summary>
         void Start();

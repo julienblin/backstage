@@ -1,7 +1,6 @@
-﻿namespace Backstage.Tests.Implementation
+﻿namespace Backstage.Tests
 {
     using System.ComponentModel.DataAnnotations;
-    using System.Linq;
 
     using FluentAssertions;
 
@@ -49,6 +48,15 @@
                 context.Should().NotBeNull();
                 contextFactoryProviderMock.Verify(x => x.CreateContextProvider(context));
             }
+        }
+
+        [Test]
+        public void It_should_default_to_NoSecurityProvider()
+        {
+            var contextFactoryProviderMock = new Mock<IContextProviderFactory>();
+            ContextFactory.StartNew(new ContextFactoryConfiguration(contextFactoryProviderMock.Object));
+
+            ContextFactory.Current.SecurityProvider.Should().BeOfType<NoSecurityProvider>();
         }
     }
 }

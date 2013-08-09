@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
+    using System.Globalization;
     using System.Threading.Tasks;
     using System.Transactions;
 
@@ -106,6 +107,17 @@
         /// Allows the storage of various contextual information.
         /// </summary>
         public IDictionary<string, object> Values { get; private set; }
+
+        /// <summary>
+        /// Gets the current logged-in user.
+        /// </summary>
+        public IUser CurrentUser
+        {
+            get
+            {
+                return this.ContextFactory.SecurityProvider.GetCurrentUser(this);
+            }
+        }
 
         /// <summary>
         /// Adds an entity to the context.
@@ -329,6 +341,69 @@
                     }
                 },
                 new AsyncTaskStateCommandResult<T> { Context = this.Clone(dependentTrans), Command = command });
+        }
+
+        /// <summary>
+        /// Returns the <see cref="AuthorizationResult"/> related to the <paramref name="operation"/>.
+        /// </summary>
+        /// <param name="operation">
+        /// The operation.
+        /// </param>
+        /// <returns>
+        /// The <see cref="AuthorizationResult"/>.
+        /// </returns>
+        public AuthorizationResult IsAuthorized(string operation)
+        {
+            var result = this.ContextFactory.SecurityProvider.GetAuthorizationResult(this, operation);
+            if (result == null)
+            {
+                var message = string.Format(
+                    CultureInfo.InvariantCulture,
+                    Resources.SecurityProviderReturnedNoResult,
+                    this.ContextFactory.SecurityProvider,
+                    operation);
+                Log.Warn(message);
+                var impliedResult = new DefaultAuthorizationResult(this.CurrentUser, operation);
+                impliedResult.AddReason(message);
+                return impliedResult;
+            }
+
+            Log.Debug(result);
+            return result;
+        }
+
+        /// <summary>
+        /// Returns the <see cref="AuthorizationResult"/> related to the <paramref name="operation"/> and
+        /// the <paramref name="target"/>.
+        /// </summary>
+        /// <param name="operation">
+        /// The operation.
+        /// </param>
+        /// <param name="target">
+        /// The target.
+        /// </param>
+        /// <returns>
+        /// The <see cref="AuthorizationResult"/>.
+        /// </returns>
+        public AuthorizationResult IsAuthorized(string operation, object target)
+        {
+            var result = this.ContextFactory.SecurityProvider.GetAuthorizationResult(this, operation, target);
+            if (result == null)
+            {
+                var message = string.Format(
+                    CultureInfo.InvariantCulture, 
+                    Resources.SecurityProviderReturnedNoResultWithTarget,
+                    this.ContextFactory.SecurityProvider,
+                    operation,
+                    target);
+                Log.Warn(message);
+                var impliedResult = new DefaultAuthorizationResult(this.CurrentUser, operation, target);
+                impliedResult.AddReason(message);
+                return impliedResult;
+            }
+
+            Log.Debug(result);
+            return result;
         }
 
         /// <summary>
