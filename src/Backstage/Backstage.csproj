@@ -63,6 +63,7 @@
     <Compile Include="Context.cs" />
     <Compile Include="ContextFactory.cs" />
     <Compile Include="ContextFactoryConfiguration.cs" />
+    <Compile Include="CRUDOperation.cs" />
     <Compile Include="DefaultAuthorizationResult.cs" />
     <Compile Include="DomainEventRaisedEventArgs.cs" />
     <Compile Include="DomainEvents.cs" />
