@@ -41,5 +41,19 @@
             result.User.Should().Be(AnonymousUser.Instance);
             result.ToString().Should().Contain("No security provider");
         }
+
+        [Test]
+        public void It_should_authorize_all_operations_on_all_targets_and_all_fields()
+        {
+            var context = new Mock<IContext>().Object;
+            var provider = new NoSecurityProvider();
+            var result = provider.GetAuthorizationResult(context, "foo", provider, "bar");
+            result.Result.Should().Be(true);
+            result.Operation.Should().Be("foo");
+            result.Target.Should().Be(provider);
+            result.Field.Should().Be("bar");
+            result.User.Should().Be(AnonymousUser.Instance);
+            result.ToString().Should().Contain("No security provider");
+        }
     }
 }

@@ -66,5 +66,31 @@
             result.AddReason(Resources.UsingDefaultNoSecurityProvider);
             return result;
         }
+
+        /// <summary>
+        /// Gets the <see cref="AuthorizationResult"/> for the current context and current user.
+        /// </summary>
+        /// <param name="context">
+        /// The context.
+        /// </param>
+        /// <param name="operation">
+        /// The operation.
+        /// </param>
+        /// <param name="target">
+        /// The target.
+        /// </param>
+        /// <param name="field">
+        /// The field.
+        /// </param>
+        /// <returns>
+        /// The <see cref="AuthorizationResult"/>.
+        /// </returns>
+        public AuthorizationResult GetAuthorizationResult(IContext context, string operation, object target, string field)
+        {
+            var result = new DefaultAuthorizationResult(this.GetCurrentUser(context), operation, target, field);
+            result.SetResult(true);
+            result.AddReason(Resources.UsingDefaultNoSecurityProvider);
+            return result;
+        }
     }
 }

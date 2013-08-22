@@ -46,5 +46,25 @@
         /// The <see cref="AuthorizationResult"/>.
         /// </returns>
         AuthorizationResult GetAuthorizationResult(IContext context, string operation, object target);
+
+        /// <summary>
+        /// Gets the <see cref="AuthorizationResult"/> for the current context and current user.
+        /// </summary>
+        /// <param name="context">
+        /// The context.
+        /// </param>
+        /// <param name="operation">
+        /// The operation.
+        /// </param>
+        /// <param name="target">
+        /// The target.
+        /// </param>
+        /// <param name="field">
+        /// The field.
+        /// </param>
+        /// <returns>
+        /// The <see cref="AuthorizationResult"/>.
+        /// </returns>
+        AuthorizationResult GetAuthorizationResult(IContext context, string operation, object target, string field);
     }
 }

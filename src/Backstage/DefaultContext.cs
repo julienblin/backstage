@@ -407,6 +407,43 @@
         }
 
         /// <summary>
+        /// Returns the <see cref="AuthorizationResult"/> related to the <paramref name="operation"/>,
+        /// the <paramref name="target"/> and the <paramref name="field"/>.
+        /// </summary>
+        /// <param name="operation">
+        /// The operation.
+        /// </param>
+        /// <param name="target">
+        /// The target.
+        /// </param>
+        /// <param name="field">
+        /// The field.</param>
+        /// <returns>
+        /// The <see cref="AuthorizationResult"/>.
+        /// </returns>
+        public AuthorizationResult IsAuthorized(string operation, object target, string field)
+        {
+            var result = this.ContextFactory.SecurityProvider.GetAuthorizationResult(this, operation, target, field);
+            if (result == null)
+            {
+                var message = string.Format(
+                    CultureInfo.InvariantCulture,
+                    Resources.SecurityProviderReturnedNoResultWithTargetAndField,
+                    this.ContextFactory.SecurityProvider,
+                    operation,
+                    target,
+                    field);
+                Log.Warn(message);
+                var impliedResult = new DefaultAuthorizationResult(this.CurrentUser, operation, target, field);
+                impliedResult.AddReason(message);
+                return impliedResult;
+            }
+
+            Log.Debug(result);
+            return result;
+        }
+
+        /// <summary>
         /// Starts the context.
         /// </summary>
         public void Start()

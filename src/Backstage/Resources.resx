@@ -177,6 +177,9 @@
   <data name="SecurityProviderReturnedNoResultWithTarget" xml:space="preserve">
     <value>The security provider {0} returned no result for operation {1} and target {2}. Assuming a false, but you should have a look.</value>
   </data>
+  <data name="SecurityProviderReturnedNoResultWithTargetAndField" xml:space="preserve">
+    <value>The security provider {0} returned no result for operation {1}, target {2} and field {3}. Assuming a false, but you should have a look.</value>
+  </data>
   <data name="SelectionFunctionReturnedNull" xml:space="preserve">
     <value>The selection function of the composite provider factory returned an empty IContextProvider for {0}.</value>
   </data>

@@ -205,6 +205,9 @@
                 var target = new object();
                 context.IsAuthorized("foo", target);
                 this.securityProviderMock.Verify(x => x.GetAuthorizationResult(context, "foo", target));
+
+                context.IsAuthorized("foo", target, "bar");
+                this.securityProviderMock.Verify(x => x.GetAuthorizationResult(context, "foo", target, "bar"));
             }
         }
     }

@@ -189,6 +189,24 @@
         AuthorizationResult IsAuthorized(string operation, object target);
 
         /// <summary>
+        /// Returns the <see cref="AuthorizationResult"/> related to the <paramref name="operation"/>,
+        /// the <paramref name="target"/> and the <paramref name="field"/>.
+        /// </summary>
+        /// <param name="operation">
+        /// The operation.
+        /// </param>
+        /// <param name="target">
+        /// The target.
+        /// </param>
+        /// <param name="field">
+        /// The field.
+        /// </param>
+        /// <returns>
+        /// The <see cref="AuthorizationResult"/>.
+        /// </returns>
+        AuthorizationResult IsAuthorized(string operation, object target, string field);
+
+        /// <summary>
         /// Starts the context.
         /// </summary>
         void Start();

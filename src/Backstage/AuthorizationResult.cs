@@ -35,12 +35,33 @@
         /// The target.
         /// </param>
         protected AuthorizationResult(IUser user, string operation, object target)
+            : this(user, operation, target, null)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AuthorizationResult"/> class.
+        /// </summary>
+        /// <param name="user">
+        /// The user.
+        /// </param>
+        /// <param name="operation">
+        /// The evaluated operation.
+        /// </param>
+        /// <param name="target">
+        /// The target.
+        /// </param>
+        /// <param name="field">
+        /// The field.
+        /// </param>
+        protected AuthorizationResult(IUser user, string operation, object target, string field)
         {
             user.ThrowIfNull("user");
             operation.ThrowIfNull("operation");
             this.User = user;
             this.Operation = operation;
             this.Target = target;
+            this.Field = field;
         }
 
         /// <summary>
@@ -63,6 +84,11 @@
         /// Gets the target, if any.
         /// </summary>
         public virtual object Target { get; private set; }
+
+        /// <summary>
+        /// Gets the field, if any.
+        /// </summary>
+        public virtual string Field { get; private set; }
 
         /// <summary>
         /// Gets the reasons (debug information).

@@ -241,6 +241,15 @@ namespace Backstage {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The security provider {0} returned no result for operation {1}, target {2} and field {3}. Assuming a false, but you should have a look..
+        /// </summary>
+        internal static string SecurityProviderReturnedNoResultWithTargetAndField {
+            get {
+                return ResourceManager.GetString("SecurityProviderReturnedNoResultWithTargetAndField", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The selection function of the composite provider factory returned an empty IContextProvider for {0}..
         /// </summary>
         internal static string SelectionFunctionReturnedNull {

@@ -51,6 +51,26 @@
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="DefaultAuthorizationResult"/> class.
+        /// </summary>
+        /// <param name="user">
+        /// The user.
+        /// </param>
+        /// <param name="operation">
+        /// The evaluated Operation.
+        /// </param>
+        /// <param name="target">
+        /// The target.
+        /// </param>
+        /// <param name="field">
+        /// The field.
+        /// </param>
+        public DefaultAuthorizationResult(IUser user, string operation, object target, string field)
+            : base(user, operation, target, field)
+        {
+        }
+
+        /// <summary>
         /// Gets or sets a value indicating whether result.
         /// </summary>
         public override bool Result
@@ -111,10 +131,11 @@
         {
             return string.Format(
                 CultureInfo.InvariantCulture,
-                "[{0}->{1}{2}?: {3} ({4})]",
+                "[{0}->{1}{2}{3}?: {4} ({5})]",
                 this.User,
                 this.Operation,
                 this.Target != null ? " " + this.Target : string.Empty,
+                this.Field != null ? "." + this.Field : string.Empty,
                 this.Result ? "YES" : "NO",
                 string.Join(", ", this.Reasons));
         }
