@@ -177,6 +177,7 @@
         {
             if (disposing)
             {
+                Log.Info(Resources.Disposing.Format(this.configuration.ContextProviderFactory));
                 this.configuration.ContextProviderFactory.Dispose();
             }
         }

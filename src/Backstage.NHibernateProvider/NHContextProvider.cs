@@ -118,18 +118,20 @@
         /// <summary>
         /// Gets an entity by its id.
         /// </summary>
+        /// <param name="entityType">
+        /// The type of entity.
+        /// </param>
         /// <param name="id">
         /// The entity id.
         /// </param>
-        /// <typeparam name="T">
-        /// The type of entity.
-        /// </typeparam>
         /// <returns>
         /// The entity.
         /// </returns>
-        public T GetById<T>(object id)
+        public object GetById(Type entityType, object id)
         {
-            return this.session.Get<T>(id);
+            entityType.ThrowIfNull("entityType");
+            id.ThrowIfNull("id");
+            return this.session.Get(entityType, id);
         }
 
         /// <summary>

@@ -187,12 +187,31 @@
         /// </returns>
         public T GetById<T>(object id)
         {
+            return (T)this.GetById(typeof(T), id);
+        }
+
+        /// <summary>
+        /// Gets an entity by its id.
+        /// </summary>
+        /// <param name="entityType">
+        /// The type of entity.
+        /// </param>
+        /// <param name="id">
+        /// The entity id.
+        /// </param>
+        /// <returns>
+        /// The entity.
+        /// </returns>
+        public object GetById(Type entityType, object id)
+        {
+            entityType.ThrowIfNull("entityType");
+            id.ThrowIfNull("id");
             if (!this.IsReady)
             {
                 throw new BackstageException(Resources.ContextNotReady);
             }
 
-            return this.contextProvider.GetById<T>(id);
+            return this.contextProvider.GetById(entityType, id);
         }
 
         /// <summary>

@@ -61,8 +61,8 @@
                 contextProvider.Reload(entity1);
                 contextProviderMock1.Verify(x => x.Reload(entity1));
 
-                contextProvider.GetById<Entity2>(5);
-                contextProviderMock2.Verify(x => x.GetById<Entity2>(5));
+                contextProvider.GetById(typeof(Entity2), 5);
+                contextProviderMock2.Verify(x => x.GetById(typeof(Entity2), 5));
 
                 contextProvider.Fulfill(query1);
                 contextProviderMock1.Verify(x => x.Fulfill(query1));

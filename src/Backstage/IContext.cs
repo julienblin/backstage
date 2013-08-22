@@ -94,6 +94,20 @@
         T GetById<T>(object id);
 
         /// <summary>
+        /// Gets an entity by its id.
+        /// </summary>
+        /// <param name="entityType">
+        /// The type of entity.
+        /// </param>
+        /// <param name="id">
+        /// The entity id.
+        /// </param>
+        /// <returns>
+        /// The entity.
+        /// </returns>
+        object GetById(Type entityType, object id);
+
+        /// <summary>
         /// Fulfill a <see cref="IQuery{T}"/>.
         /// </summary>
         /// <param name="query">

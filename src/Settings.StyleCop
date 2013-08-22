@@ -58,6 +58,7 @@
     <Analyzer AnalyzerId="StyleCop.CSharp.NamingRules">
       <AnalyzerSettings>
         <CollectionProperty Name="Hungarian">
+          <Value>id</Value>
           <Value>is</Value>
           <Value>nh</Value>
         </CollectionProperty>

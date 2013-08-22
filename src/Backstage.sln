@@ -18,6 +18,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{502E68
 		.nuget\packages.config = .nuget\packages.config
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Backstage.Web.Mvc", "Backstage.Web.Mvc\Backstage.Web.Mvc.csproj", "{D2EAEB1A-6342-4D32-928A-AEC01578C129}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Backstage.Web.Mvc.Tests", "Tests\Backstage.Web.Mvc.Tests\Backstage.Web.Mvc.Tests.csproj", "{FBEF3186-A3B3-4FBB-9E09-9736073D13F7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,6 +48,14 @@ Global
 		{727B081E-0A3D-4DB2-B82B-11D35778E297}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{727B081E-0A3D-4DB2-B82B-11D35778E297}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{727B081E-0A3D-4DB2-B82B-11D35778E297}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2EAEB1A-6342-4D32-928A-AEC01578C129}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2EAEB1A-6342-4D32-928A-AEC01578C129}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2EAEB1A-6342-4D32-928A-AEC01578C129}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2EAEB1A-6342-4D32-928A-AEC01578C129}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FBEF3186-A3B3-4FBB-9E09-9736073D13F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FBEF3186-A3B3-4FBB-9E09-9736073D13F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FBEF3186-A3B3-4FBB-9E09-9736073D13F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FBEF3186-A3B3-4FBB-9E09-9736073D13F7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -51,5 +63,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{D92B3342-54C2-4991-BC0B-A5C5272B28CD} = {7E9E7649-CBC4-40ED-BC9A-FAF8E9B46604}
 		{727B081E-0A3D-4DB2-B82B-11D35778E297} = {7E9E7649-CBC4-40ED-BC9A-FAF8E9B46604}
+		{FBEF3186-A3B3-4FBB-9E09-9736073D13F7} = {7E9E7649-CBC4-40ED-BC9A-FAF8E9B46604}
 	EndGlobalSection
 EndGlobal

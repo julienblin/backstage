@@ -35,16 +35,16 @@
         /// <summary>
         /// Gets an entity by its id.
         /// </summary>
+        /// <param name="entityType">
+        /// The type of entity.
+        /// </param>
         /// <param name="id">
         /// The entity id.
         /// </param>
-        /// <typeparam name="T">
-        /// The type of entity.
-        /// </typeparam>
         /// <returns>
         /// The entity.
         /// </returns>
-        T GetById<T>(object id);
+        object GetById(Type entityType, object id);
 
         /// <summary>
         /// Fulfill a <see cref="IQuery{T}"/>.

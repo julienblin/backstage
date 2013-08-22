@@ -107,25 +107,25 @@
         /// <summary>
         /// Gets an entity by its id.
         /// </summary>
+        /// <param name="entityType">
+        /// The type of entity.
+        /// </param>
         /// <param name="id">
         /// The entity id.
         /// </param>
-        /// <typeparam name="T">
-        /// The type of entity.
-        /// </typeparam>
         /// <returns>
         /// The entity.
         /// </returns>
-        public T GetById<T>(object id)
+        public object GetById(Type entityType, object id)
         {
-            var selectedContextprovider = this.providerFactory.SelectionFunction(this.contextProviders, typeof(T));
+            var selectedContextprovider = this.providerFactory.SelectionFunction(this.contextProviders, entityType);
             if (selectedContextprovider == null)
             {
-                Log.Error(Resources.SelectionFunctionReturnedNull.Format(typeof(T)));
-                throw new BackstageException(Resources.SelectionFunctionReturnedNull.Format(typeof(T)));
+                Log.Error(Resources.SelectionFunctionReturnedNull.Format(entityType));
+                throw new BackstageException(Resources.SelectionFunctionReturnedNull.Format(entityType));
             }
 
-            return selectedContextprovider.GetById<T>(id);
+            return selectedContextprovider.GetById(entityType, id);
         }
 
         /// <summary>

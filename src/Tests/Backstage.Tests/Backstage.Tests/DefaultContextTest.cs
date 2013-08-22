@@ -53,9 +53,9 @@
                 context.Reload(entity);
                 this.contextProviderMock.Verify(x => x.Reload(entity));
 
-                this.contextProviderMock.Setup(x => x.GetById<IEntity>(5)).Returns(entity);
+                this.contextProviderMock.Setup(x => x.GetById(typeof(IEntity), 5)).Returns(entity);
                 context.GetById<IEntity>(5).Should().Be(entity);
-                this.contextProviderMock.Verify(x => x.GetById<IEntity>(5));
+                this.contextProviderMock.Verify(x => x.GetById(typeof(IEntity), 5));
 
                 this.contextProviderMock.Setup(x => x.Fulfill(query)).Returns(entity);
                 context.Fulfill(query).Should().Be(entity);
