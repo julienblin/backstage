@@ -76,6 +76,7 @@
     <Compile Include="Mappings\EmployeeMap.cs" />
     <Compile Include="Mappings\VacancyMap.cs" />
     <Compile Include="NHContextProviderTest.cs" />
+    <Compile Include="NHDynamicQueryTest.cs" />
     <Compile Include="NHQueryCriteriaTest.cs" />
     <Compile Include="NHQueryQueryOverTest.cs" />
     <Compile Include="NHQuerySqlTest.cs" />

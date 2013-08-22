@@ -81,9 +81,11 @@
     <Compile Include="IPreparedQuery.cs" />
     <Compile Include="Logs\NHCommonInternalLogger.cs" />
     <Compile Include="Logs\NHCommonLoggerFactory.cs" />
+    <Compile Include="NHDynamicQuery.cs" />
     <Compile Include="NHContextProvider.cs" />
     <Compile Include="NHContextProviderFactory.cs" />
     <Compile Include="NHContextProviderFactoryConfiguration.cs" />
+    <Compile Include="NHDynamicQueryProperty.cs" />
     <Compile Include="NHEntity.cs" />
     <Compile Include="NHEntityMap.cs" />
     <Compile Include="NHQueryCriteria.cs" />

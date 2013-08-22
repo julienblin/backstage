@@ -97,6 +97,15 @@ namespace Backstage.NHibernateProvider {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Unable to find a property named {0} on type {1}..
+        /// </summary>
+        internal static string UnableToFindPropertyOnType {
+            get {
+                return ResourceManager.GetString("UnableToFindPropertyOnType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Unrecognized database type {0}..
         /// </summary>
         internal static string UnrecognizedDatabaseType {

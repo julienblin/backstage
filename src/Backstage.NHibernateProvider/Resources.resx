@@ -129,6 +129,9 @@
   <data name="QueryMustBeNHQuery" xml:space="preserve">
     <value>Expected query to implement INHQuery. Actual query: {0}.</value>
   </data>
+  <data name="UnableToFindPropertyOnType" xml:space="preserve">
+    <value>Unable to find a property named {0} on type {1}.</value>
+  </data>
   <data name="UnrecognizedDatabaseType" xml:space="preserve">
     <value>Unrecognized database type {0}.</value>
   </data>
