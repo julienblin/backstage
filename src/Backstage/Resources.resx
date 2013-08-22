@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Added" xml:space="preserve">
+    <value>Added {0}.</value>
+  </data>
   <data name="Anonymous" xml:space="preserve">
     <value>Anonymous</value>
   </data>
@@ -156,6 +159,24 @@
   <data name="EventRaised" xml:space="preserve">
     <value>Event {0} raised.</value>
   </data>
+  <data name="Executed" xml:space="preserve">
+    <value>Executed {0}.</value>
+  </data>
+  <data name="ExecutedAsync" xml:space="preserve">
+    <value>Executed async {0}.</value>
+  </data>
+  <data name="ExecutedAsyncWithResult" xml:space="preserve">
+    <value>Executed async {0} -&gt; {1}.</value>
+  </data>
+  <data name="ExecutedWithResult" xml:space="preserve">
+    <value>Executed {0} -&gt; {1}.</value>
+  </data>
+  <data name="Fulfilled" xml:space="preserve">
+    <value>Fulfilled {0} -&gt; {1}.</value>
+  </data>
+  <data name="GotById" xml:space="preserve">
+    <value>GotById {0}, {1} -&gt; {2}.</value>
+  </data>
   <data name="NoCurrentContext" xml:space="preserve">
     <value>The current context holder ({0}) returned no current context.</value>
   </data>
@@ -164,6 +185,12 @@
   </data>
   <data name="RaisingEvent" xml:space="preserve">
     <value>Raising event {0}...</value>
+  </data>
+  <data name="Reloaded" xml:space="preserve">
+    <value>Reloaded {0}.</value>
+  </data>
+  <data name="Removed" xml:space="preserve">
+    <value>Removed {0}.</value>
   </data>
   <data name="ScannedAndFoundDomainEventHandlers" xml:space="preserve">
     <value>Scanned {0} and found {1} event handlers.</value>
@@ -182,6 +209,9 @@
   </data>
   <data name="SelectionFunctionReturnedNull" xml:space="preserve">
     <value>The selection function of the composite provider factory returned an empty IContextProvider for {0}.</value>
+  </data>
+  <data name="StartedAsyncExecution" xml:space="preserve">
+    <value>Started async execution of {0}.</value>
   </data>
   <data name="StartedIn" xml:space="preserve">
     <value>{0} started in {1} milliseconds.</value>

@@ -135,6 +135,7 @@
             }
 
             this.contextProvider.Add(entity);
+            Log.Debug(Resources.Added.Format(entity));
         }
 
         /// <summary>
@@ -153,6 +154,7 @@
             }
 
             this.contextProvider.Remove(entity);
+            Log.Debug(Resources.Removed.Format(entity));
         }
 
         /// <summary>
@@ -171,6 +173,7 @@
             }
 
             this.contextProvider.Reload(entity);
+            Log.Debug(Resources.Reloaded.Format(entity));
         }
 
         /// <summary>
@@ -211,7 +214,9 @@
                 throw new BackstageException(Resources.ContextNotReady);
             }
 
-            return this.contextProvider.GetById(entityType, id);
+            var result = this.contextProvider.GetById(entityType, id);
+            Log.Debug(Resources.GotById.Format(entityType, id, result));
+            return result;
         }
 
         /// <summary>
@@ -235,7 +240,9 @@
                 throw new BackstageException(Resources.ContextNotReady);
             }
 
-            return this.contextProvider.Fulfill(query);
+            var result = this.contextProvider.Fulfill(query);
+            Log.Debug(Resources.Fulfilled.Format(query, result));
+            return result;
         }
 
         /// <summary>
@@ -254,6 +261,7 @@
             }
 
             command.Execute(this);
+            Log.Debug(Resources.Executed.Format(command));
         }
 
         /// <summary>
@@ -277,7 +285,9 @@
                 throw new BackstageException(Resources.ContextNotReady);
             }
 
-            return command.Execute(this);
+            var result = command.Execute(this);
+            Log.Debug(Resources.ExecutedWithResult.Format(command, result));
+            return result;
         }
 
         /// <summary>
@@ -297,7 +307,7 @@
         {
             command.ThrowIfNull("command");
 
-            return Task.Factory.StartNew(
+            var task = Task.Factory.StartNew(
                 state =>
                 {
                     var stateCmd = (AsyncTaskStateCommand)state;
@@ -306,6 +316,7 @@
                         stateCmd.Context.Start();
                         stateCmd.Context.Execute(stateCmd.Command);
                         stateCmd.Context.Commit();
+                        Log.Debug(Resources.ExecutedAsync.Format(command));
                     }
                     catch (Exception ex)
                     {
@@ -318,6 +329,9 @@
                     }
                 },
                 new AsyncTaskStateCommand { Context = this.Clone(), Command = command });
+
+            Log.Debug(Resources.StartedAsyncExecution.Format(command));
+            return task;
         }
 
         /// <summary>
@@ -338,7 +352,9 @@
         /// </returns>
         public Task<T> ExecuteAsync<T>(ICommand<T> command, bool dependentTrans = true)
         {
-            return Task<T>.Factory.StartNew(
+            command.ThrowIfNull("command");
+
+            var task = Task<T>.Factory.StartNew(
                 state =>
                 {
                     var stateCmd = (AsyncTaskStateCommandResult<T>)state;
@@ -347,6 +363,7 @@
                         stateCmd.Context.Start();
                         var result = stateCmd.Context.Execute(stateCmd.Command);
                         stateCmd.Context.Commit();
+                        Log.Debug(Resources.ExecutedAsyncWithResult.Format(command, result));
                         return result;
                     }
                     catch (Exception ex)
@@ -360,6 +377,9 @@
                     }
                 },
                 new AsyncTaskStateCommandResult<T> { Context = this.Clone(dependentTrans), Command = command });
+
+            Log.Debug(Resources.StartedAsyncExecution.Format(command));
+            return task;
         }
 
         /// <summary>

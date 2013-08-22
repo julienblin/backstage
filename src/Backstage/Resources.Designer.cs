@@ -61,6 +61,15 @@ namespace Backstage {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Added {0}..
+        /// </summary>
+        internal static string Added {
+            get {
+                return ResourceManager.GetString("Added", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Anonymous.
         /// </summary>
         internal static string Anonymous {
@@ -178,6 +187,60 @@ namespace Backstage {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Executed {0}..
+        /// </summary>
+        internal static string Executed {
+            get {
+                return ResourceManager.GetString("Executed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Executed async {0}..
+        /// </summary>
+        internal static string ExecutedAsync {
+            get {
+                return ResourceManager.GetString("ExecutedAsync", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Executed async {0} -&gt; {1}..
+        /// </summary>
+        internal static string ExecutedAsyncWithResult {
+            get {
+                return ResourceManager.GetString("ExecutedAsyncWithResult", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Executed {0} -&gt; {1}..
+        /// </summary>
+        internal static string ExecutedWithResult {
+            get {
+                return ResourceManager.GetString("ExecutedWithResult", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fulfilled {0} -&gt; {1}..
+        /// </summary>
+        internal static string Fulfilled {
+            get {
+                return ResourceManager.GetString("Fulfilled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GotById {0}, {1} -&gt; {2}..
+        /// </summary>
+        internal static string GotById {
+            get {
+                return ResourceManager.GetString("GotById", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The current context holder ({0}) returned no current context..
         /// </summary>
         internal static string NoCurrentContext {
@@ -201,6 +264,24 @@ namespace Backstage {
         internal static string RaisingEvent {
             get {
                 return ResourceManager.GetString("RaisingEvent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reloaded {0}..
+        /// </summary>
+        internal static string Reloaded {
+            get {
+                return ResourceManager.GetString("Reloaded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Removed {0}..
+        /// </summary>
+        internal static string Removed {
+            get {
+                return ResourceManager.GetString("Removed", resourceCulture);
             }
         }
         
@@ -255,6 +336,15 @@ namespace Backstage {
         internal static string SelectionFunctionReturnedNull {
             get {
                 return ResourceManager.GetString("SelectionFunctionReturnedNull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Started async execution of {0}..
+        /// </summary>
+        internal static string StartedAsyncExecution {
+            get {
+                return ResourceManager.GetString("StartedAsyncExecution", resourceCulture);
             }
         }
         
