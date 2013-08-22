@@ -89,6 +89,7 @@
     <Compile Include="GetFromContextAttribute.cs" />
     <Compile Include="GetFromContextModelBinder.cs" />
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Helpers\Pager.cs" />
     <Compile Include="IsAuthorizedAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources.Designer.cs">
