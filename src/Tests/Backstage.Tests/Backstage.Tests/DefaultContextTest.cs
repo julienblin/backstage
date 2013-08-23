@@ -151,23 +151,21 @@
         }
 
         [Test]
-        public void It_should_execute_command_async()
+        public async void It_should_execute_command_async()
         {
             var commandMock = new Mock<ICommand>();
             var commandResultMock = new Mock<ICommand<object>>();
 
             using (var context = ContextFactory.Current.StartNewContext())
             {
-                var task = context.ExecuteAsync(commandMock.Object);
-                task.Wait();
+                await context.ExecuteAsync(commandMock.Object);
 
                 commandMock.Verify(x => x.Execute(It.Is<IContext>(c => c.Parent == context)));
 
                 var returnValue = new object();
                 commandResultMock.Setup(x => x.Execute(It.IsAny<IContext>())).Returns(returnValue);
-                var taskResult = context.ExecuteAsync(commandResultMock.Object);
-                taskResult.Wait();
-                taskResult.Result.Should().Be(returnValue);
+                var result = await context.ExecuteAsync(commandResultMock.Object);
+                result.Should().Be(returnValue);
 
                 commandMock.Verify(x => x.Execute(It.Is<IContext>(c => c.Parent == context)));
             }
