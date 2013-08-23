@@ -124,6 +124,15 @@ namespace Backstage {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Could not determine property name from {0}..
+        /// </summary>
+        internal static string CouldNotDeterminePropertyName {
+            get {
+                return ResourceManager.GetString("CouldNotDeterminePropertyName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Disposing {0}....
         /// </summary>
         internal static string Disposing {

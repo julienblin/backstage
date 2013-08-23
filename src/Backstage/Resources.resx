@@ -138,6 +138,9 @@
   <data name="ContextProviderFactoryReturnedNull" xml:space="preserve">
     <value>The context provider factory {0} returned a null IContextProvider.</value>
   </data>
+  <data name="CouldNotDeterminePropertyName" xml:space="preserve">
+    <value>Could not determine property name from {0}.</value>
+  </data>
   <data name="Disposing" xml:space="preserve">
     <value>Disposing {0}...</value>
   </data>

@@ -28,6 +28,69 @@
         /// <param name="htmlHelper">
         /// The html helper.
         /// </param>
+        /// <typeparam name="T">
+        /// The type of the model. Must be <see cref="IPaginationResult"/>.
+        /// </typeparam>
+        /// <returns>
+        /// The pagination html.
+        /// </returns>
+        public static IHtmlString PageLinks<T>(this HtmlHelper<T> htmlHelper)
+            where T : IPaginationResult
+        {
+            return PageLinks(htmlHelper, htmlHelper.ViewData.Model, DefaultPagePropertyName, new RouteValueDictionary());
+        }
+
+        /// <summary>
+        /// Generates pagination links using <a href="http://getbootstrap.com/">Bootstrap</a> pagination tag format.
+        /// </summary>
+        /// <param name="htmlHelper">
+        /// The html helper.
+        /// </param>
+        /// <param name="pageProperty">
+        /// The page property name.
+        /// </param>
+        /// <typeparam name="T">
+        /// The type of the model. Must be <see cref="IPaginationResult"/>.
+        /// </typeparam>
+        /// <returns>
+        /// The pagination html.
+        /// </returns>
+        public static IHtmlString PageLinks<T>(this HtmlHelper<T> htmlHelper, string pageProperty)
+            where T : IPaginationResult
+        {
+            return PageLinks(htmlHelper, htmlHelper.ViewData.Model, pageProperty, new RouteValueDictionary());
+        }
+
+        /// <summary>
+        /// Generates pagination links using <a href="http://getbootstrap.com/">Bootstrap</a> pagination tag format.
+        /// </summary>
+        /// <param name="htmlHelper">
+        /// The html helper.
+        /// </param>
+        /// <param name="pageProperty">
+        /// The page property name.
+        /// </param>
+        /// <param name="htmlAttributes">
+        /// An object that contains the HTML attributes to set for the element.
+        /// </param>
+        /// <typeparam name="T">
+        /// The type of the model. Must be <see cref="IPaginationResult"/>.
+        /// </typeparam>
+        /// <returns>
+        /// The pagination html.
+        /// </returns>
+        public static IHtmlString PageLinks<T>(this HtmlHelper<T> htmlHelper, string pageProperty, object htmlAttributes)
+            where T : IPaginationResult
+        {
+            return PageLinks(htmlHelper, htmlHelper.ViewData.Model, pageProperty, HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttributes));
+        }
+
+        /// <summary>
+        /// Generates pagination links using <a href="http://getbootstrap.com/">Bootstrap</a> pagination tag format.
+        /// </summary>
+        /// <param name="htmlHelper">
+        /// The html helper.
+        /// </param>
         /// <param name="result">
         /// The result to paginate.
         /// </param>
@@ -77,7 +140,11 @@
         /// <returns>
         /// The pagination html.
         /// </returns>
-        public static IHtmlString PageLinks(this HtmlHelper htmlHelper, IPaginationResult result, string pageProperty, IDictionary<string, object> htmlAttributes)
+        public static IHtmlString PageLinks(
+            this HtmlHelper htmlHelper, 
+            IPaginationResult result,
+            string pageProperty,
+            IDictionary<string, object> htmlAttributes)
         {
             htmlHelper.ThrowIfNull("htmlHelper");
             result.ThrowIfNull("result");
@@ -119,7 +186,11 @@
         /// <param name="pageProperty">
         /// The page property name.
         /// </param>
-        private static void RenderAllLinks(HtmlHelper htmlHelper, IPaginationResult result, TagBuilder baseTag, string pageProperty)
+        private static void RenderAllLinks(
+            HtmlHelper htmlHelper,
+            IPaginationResult result,
+            TagBuilder baseTag,
+            string pageProperty)
         {
             for (var i = 1; i <= result.PageCount; ++i)
             {
@@ -151,7 +222,11 @@
         /// </param>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly", Justification = "Triggered by &lt; etc. links.")]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1303:Do not pass literals as localized parameters", Justification = "Triggered by &lt; etc. links.")]
-        private static void RenderSummaryLinks(HtmlHelper htmlHelper, IPaginationResult result, TagBuilder baseTag, string pageProperty)
+        private static void RenderSummaryLinks(
+            HtmlHelper htmlHelper,
+            IPaginationResult result,
+            TagBuilder baseTag,
+            string pageProperty)
         {
             if (result.HasPreviousPage)
             {

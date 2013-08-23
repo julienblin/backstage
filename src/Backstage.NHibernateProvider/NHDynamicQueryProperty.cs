@@ -1,11 +1,13 @@
 ﻿namespace Backstage.NHibernateProvider
 {
+    using System;
     using System.Collections;
     using System.Collections.Generic;
     using System.Dynamic;
     using System.Globalization;
     using System.Linq;
     using System.Reflection;
+    using System.Text.RegularExpressions;
 
     using NHibernate;
     using NHibernate.Criterion;
@@ -16,6 +18,11 @@
     /// </summary>
     public class NHDynamicQueryProperty : DynamicObject
     {
+        /// <summary>
+        /// The property extractor regex - used in the <see cref="SetIndexBinder"/> method.
+        /// </summary>
+        internal static readonly Regex PropertyExtractor = new Regex(@"^(?<property>[^\.]+)\.?(?<remaining>.*)", RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.ExplicitCapture);
+
         /// <summary>
         /// The property info.
         /// </summary>
@@ -96,6 +103,92 @@
             }
 
             result = this.joins[property];
+            return true;
+        }
+
+        /// <summary>
+        /// Provides the implementation for operations that set a value by index. Classes derived from the <see cref="T:System.Dynamic.DynamicObject"/> class can override this method to specify dynamic behavior for operations that access objects by a specified index.
+        /// </summary>
+        /// <returns>
+        /// true if the operation is successful; otherwise, false. If this method returns false, the run-time binder of the language determines the behavior. (In most cases, a language-specific run-time exception is thrown.
+        /// </returns>
+        /// <param name="binder">Provides information about the operation. </param><param name="indexes">The indexes that are used in the operation. For example, for the sampleObject[3] = 10 operation in C# (sampleObject(3) = 10 in Visual Basic), where sampleObject is derived from the <see cref="T:System.Dynamic.DynamicObject"/> class, <paramref name="indexes"/> is equal to 3.</param><param name="value">The value to set to the object that has the specified index. For example, for the sampleObject[3] = 10 operation in C# (sampleObject(3) = 10 in Visual Basic), where sampleObject is derived from the <see cref="T:System.Dynamic.DynamicObject"/> class, <paramref name="value"/> is equal to 10.</param>
+        public override bool TrySetIndex(SetIndexBinder binder, object[] indexes, object value)
+        {
+            if (indexes.Length != 1)
+            {
+                return false;
+            }
+
+            var propertyNameMatch = PropertyExtractor.Match(indexes[0].ToString());
+            if (!propertyNameMatch.Success)
+            {
+                return false;
+            }
+
+            if (string.IsNullOrEmpty(propertyNameMatch.Groups["remaining"].Value))
+            {
+                // Lets try to match a method.
+                switch (propertyNameMatch.Groups["property"].Value)
+                {
+                    case "Eq":
+                        this.Eq(value);
+                        break;
+                    case "Like":
+                        this.Like(value.ToString());
+                        break;
+                    case "InsensitiveLike":
+                        this.InsensitiveLike(value.ToString());
+                        break;
+                    case "Gt":
+                        this.Gt(value);
+                        break;
+                    case "Ge":
+                        this.Ge(value);
+                        break;
+                    case "Lt":
+                        this.Lt(value);
+                        break;
+                    case "Le":
+                        this.Le(value);
+                        break;
+                    case "In":
+                        this.In((ICollection)value);
+                        break;
+                    case "IsNull":
+                        this.IsNull(Convert.ToBoolean(value, CultureInfo.CurrentCulture));
+                        break;
+                    case "IsEmpty":
+                        this.IsEmpty(Convert.ToBoolean(value, CultureInfo.CurrentCulture));
+                        break;
+                    default:
+                        throw new BackstageException(string.Format(CultureInfo.InvariantCulture, Resources.UnableToFindPropertyOnType, propertyNameMatch.Groups["property"].Value, this.propertyInfo.PropertyType));
+                }
+
+                return true;
+            }
+
+            // Try to match a property
+            var property = this.propertyInfo.PropertyType.GetProperty(propertyNameMatch.Groups["property"].Value);
+            if (typeof(IEnumerable).IsAssignableFrom(this.propertyInfo.PropertyType)
+                && this.propertyInfo.PropertyType.IsGenericType)
+            {
+                var targetType = this.propertyInfo.PropertyType.GetGenericArguments()[0];
+                property = targetType.GetProperty(propertyNameMatch.Groups["property"].Value);
+            }
+
+            if (property == null)
+            {
+                throw new BackstageException(string.Format(CultureInfo.InvariantCulture, Resources.UnableToFindPropertyOnType, propertyNameMatch.Groups["property"].Value, this.propertyInfo.PropertyType));
+            }
+
+            if (!this.joins.ContainsKey(property))
+            {
+                this.joins[property] = new NHDynamicQueryProperty(property);
+            }
+
+            dynamic dynamicQuery = this.joins[property];
+            dynamicQuery[propertyNameMatch.Groups["remaining"].Value] = value;
             return true;
         }
 

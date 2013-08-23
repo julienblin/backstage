@@ -111,5 +111,33 @@
                 context.Fulfill((NHDynamicQuery<Employee>)query).Count().Should().Be(1);
             }
         }
+
+        [Test]
+        public void It_should_work_with_string_accessor()
+        {
+            using (var context = ContextFactory.Current.StartNewContext())
+            {
+                var now = DateTime.Now;
+
+                var manager = new Employee { Name = "The Boss." };
+                context.Add(manager);
+
+                var subordinate = new Employee { Name = "subordinate", Manager = manager };
+                context.Add(subordinate);
+
+                var vacancy = new Vacancy { Employee = subordinate, StartDate = now, EndDate = now.AddDays(5) };
+                context.Add(vacancy);
+
+                context.Add(new Employee { Name = "another one" });
+
+                dynamic query = new NHDynamicQuery<Employee>();
+                query["Name.Like"] = "subordinate";
+                query["Vacancies.StartDate.Gt"] = now.AddDays(-1);
+                query["Manager.Name.Eq"] = "The Boss.";
+                query["Manager.Manager.IsNull"] = true;
+
+                context.Fulfill((NHDynamicQuery<Employee>)query).Count().Should().Be(1);
+            }
+        }
     }
 }
