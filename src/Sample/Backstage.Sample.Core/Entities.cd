@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Backstage.Sample.Core.Entities.Location">
+    <Position X="12" Y="2" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAABQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Location.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Backstage.Sample.Core.Entities.RendezVous">
+    <Position X="9.25" Y="2" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAIAAAAAAAAAAAABAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\RendezVous.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Location" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Backstage.Sample.Core.Entities.Route">
+    <Position X="1.25" Y="2" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAIAAAACAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Route.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Itinerary" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Backstage.Sample.Core.Entities.RouteRendezVousLink">
+    <Position X="5.25" Y="2" Width="1.75" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAQAAAABAAAAAAAEAEAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\RouteRendezVousLink.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="RendezVous" />
+      <Property Name="Route" />
+    </ShowAsAssociation>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

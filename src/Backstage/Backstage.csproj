@@ -68,6 +68,7 @@
     <Compile Include="DomainEventRaisedEventArgs.cs" />
     <Compile Include="DomainEvents.cs" />
     <Compile Include="ExpressionExtensions.cs" />
+    <Compile Include="HashCode.cs" />
     <Compile Include="IDomainEvent.cs" />
     <Compile Include="IHandleDomainEvent.cs" />
     <Compile Include="ISecurityProvider.cs" />
