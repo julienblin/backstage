@@ -116,7 +116,7 @@
 
             modelBinder.Invoking(x => x.BindModel(controllerContext, bindingContext))
                        .ShouldThrow<BackstageException>()
-                       .WithMessage("id", ComparisonMode.Substring);
+                       .WithMessage("*id*");
         }
 
         private class TheEntity : IEntity

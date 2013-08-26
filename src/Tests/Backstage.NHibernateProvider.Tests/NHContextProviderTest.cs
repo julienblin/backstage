@@ -113,7 +113,7 @@
                 context.Add(employee);
                 
                 // The query will force a flush.
-                context.Invoking(x => x.Fulfill(new DumbQuery()).List()).ShouldThrow<ValidationException>().WithMessage("Name", ComparisonMode.Substring);
+                context.Invoking(x => x.Fulfill(new DumbQuery()).List()).ShouldThrow<ValidationException>().WithMessage("*Name*");
             }
         }
 

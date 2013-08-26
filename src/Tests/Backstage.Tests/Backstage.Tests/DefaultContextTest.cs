@@ -102,39 +102,39 @@
 
                 context.Invoking(x => x.Add(entity))
                        .ShouldThrow<BackstageException>()
-                       .WithMessage("ready", ComparisonMode.Substring);
+                       .WithMessage("*ready*");
 
                 context.Invoking(x => x.Remove(entity))
                        .ShouldThrow<BackstageException>()
-                       .WithMessage("ready", ComparisonMode.Substring);
+                       .WithMessage("*ready*");
 
                 context.Invoking(x => x.Reload(entity))
                        .ShouldThrow<BackstageException>()
-                       .WithMessage("ready", ComparisonMode.Substring);
+                       .WithMessage("*ready*");
 
                 context.Invoking(x => x.GetById<IEntity>(5))
                        .ShouldThrow<BackstageException>()
-                       .WithMessage("ready", ComparisonMode.Substring);
+                       .WithMessage("*ready*");
 
                 context.Invoking(x => x.Fulfill<IEntity>(query))
                        .ShouldThrow<BackstageException>()
-                       .WithMessage("ready", ComparisonMode.Substring);
+                       .WithMessage("*ready*");
 
                 context.Invoking(x => x.Execute(command))
                        .ShouldThrow<BackstageException>()
-                       .WithMessage("ready", ComparisonMode.Substring);
+                       .WithMessage("*ready*");
 
                 context.Invoking(x => x.Execute(commandResult))
                        .ShouldThrow<BackstageException>()
-                       .WithMessage("ready", ComparisonMode.Substring);
+                       .WithMessage("*ready*");
 
                 context.Invoking(x => x.ExecuteAsync(command))
                        .ShouldThrow<BackstageException>()
-                       .WithMessage("ready", ComparisonMode.Substring);
+                       .WithMessage("*ready*");
 
                 context.Invoking(x => x.ExecuteAsync(commandResult))
                        .ShouldThrow<BackstageException>()
-                       .WithMessage("ready", ComparisonMode.Substring);
+                       .WithMessage("*ready*");
             }
         }
 
@@ -146,7 +146,7 @@
                 var context = parentContext.Clone();
                 context.Invoking(x => x.Start(TransactionScopeOption.RequiresNew, new TransactionOptions()))
                        .ShouldThrow<BackstageException>()
-                       .WithMessage("dependent", ComparisonMode.Substring);
+                       .WithMessage("*dependent*");
             }
         }
 

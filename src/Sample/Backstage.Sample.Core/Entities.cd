@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="Backstage.Sample.Core.Entities.Location">
-    <Position X="12" Y="2" Width="1.5" />
+    <Position X="5.25" Y="1.75" Width="1.5" />
     <Compartments>
       <Compartment Name="Methods" Collapsed="true" />
     </Compartments>
@@ -11,7 +11,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Backstage.Sample.Core.Entities.RendezVous">
-    <Position X="9.25" Y="2" Width="1.5" />
+    <Position X="8.25" Y="1.75" Width="1.5" />
     <Compartments>
       <Compartment Name="Methods" Collapsed="true" />
     </Compartments>
@@ -23,32 +23,31 @@
       <Property Name="Location" />
     </ShowAsAssociation>
   </Class>
-  <Class Name="Backstage.Sample.Core.Entities.Route">
-    <Position X="1.25" Y="2" Width="1.5" />
+  <Class Name="Backstage.Sample.Core.Entities.Itinerary">
+    <Position X="14.75" Y="1.75" Width="1.5" />
     <Compartments>
-      <Compartment Name="Fields" Collapsed="true" />
       <Compartment Name="Methods" Collapsed="true" />
     </Compartments>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAIAAAACAAAAAAAAAAAA=</HashCode>
-      <FileName>Entities\Route.cs</FileName>
+      <HashCode>gAAAAIAAAAAAAAAEAAAAAAAAABAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Itinerary.cs</FileName>
     </TypeIdentifier>
     <ShowAsCollectionAssociation>
-      <Property Name="Itinerary" />
+      <Property Name="RendezVousLinks" />
     </ShowAsCollectionAssociation>
   </Class>
-  <Class Name="Backstage.Sample.Core.Entities.RouteRendezVousLink">
-    <Position X="5.25" Y="2" Width="1.75" />
+  <Class Name="Backstage.Sample.Core.Entities.ItineraryRendezVousLink">
+    <Position X="11" Y="1.75" Width="2" />
     <Compartments>
       <Compartment Name="Methods" Collapsed="true" />
     </Compartments>
     <TypeIdentifier>
-      <HashCode>AAQAAAABAAAAAAAEAEAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Entities\RouteRendezVousLink.cs</FileName>
+      <HashCode>AAQAAAABAAAAAAAEAAAAAAAAAIAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\ItineraryRendezVousLink.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
+      <Property Name="Itinerary" />
       <Property Name="RendezVous" />
-      <Property Name="Route" />
     </ShowAsAssociation>
   </Class>
   <Font Name="Segoe UI" Size="9" />

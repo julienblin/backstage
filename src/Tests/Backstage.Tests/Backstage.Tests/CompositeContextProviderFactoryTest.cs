@@ -84,7 +84,7 @@
 
                 contextProvider.Invoking(x => x.Add(entity.Object))
                                .ShouldThrow<BackstageException>()
-                               .WithMessage("selection", ComparisonMode.Substring);
+                               .WithMessage("*selection*");
             }
         }
 
