@@ -160,6 +160,15 @@ namespace Backstage {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to There has been an error while creating type {0}. Please check that there is a default constructor. See inner exception for more details..
+        /// </summary>
+        internal static string ErrorWhileCreatingTypeDefaultConstructor {
+            get {
+                return ResourceManager.GetString("ErrorWhileCreatingTypeDefaultConstructor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error while executing async command {0}. See inner exception for more details..
         /// </summary>
         internal static string ErrorWhileExecutingCommandAsync {
@@ -174,6 +183,15 @@ namespace Backstage {
         internal static string ErrorWhileRaisingDomainEvent {
             get {
                 return ResourceManager.GetString("ErrorWhileRaisingDomainEvent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There has been an error while scanning assembly {0}. LoaderExceptions: {1}..
+        /// </summary>
+        internal static string ErrorWhileScanningAssembly {
+            get {
+                return ResourceManager.GetString("ErrorWhileScanningAssembly", resourceCulture);
             }
         }
         
@@ -295,6 +313,15 @@ namespace Backstage {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Scanned assemblies and found {0} blueprints..
+        /// </summary>
+        internal static string ScannedAndFoundBlueprints {
+            get {
+                return ResourceManager.GetString("ScannedAndFoundBlueprints", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Scanned {0} and found {1} event handlers..
         /// </summary>
         internal static string ScannedAndFoundDomainEventHandlers {
@@ -309,6 +336,15 @@ namespace Backstage {
         internal static string Scanning {
             get {
                 return ResourceManager.GetString("Scanning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Scanning assemblies for blueprints....
+        /// </summary>
+        internal static string ScanningAssembliesForBlueprints {
+            get {
+                return ResourceManager.GetString("ScanningAssembliesForBlueprints", resourceCulture);
             }
         }
         
@@ -385,6 +421,24 @@ namespace Backstage {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The type {0} must implement the IEntity interface to be able to add it to the current context..
+        /// </summary>
+        internal static string TypeMustBeIEntity {
+            get {
+                return ResourceManager.GetString("TypeMustBeIEntity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unable to find a blueprint for {0}. Please verify that there is an implementation of IBlueprint&lt;{0}&gt; and that it is accessible by the current AppDomain..
+        /// </summary>
+        internal static string UnableToFindABlueprint {
+            get {
+                return ResourceManager.GetString("UnableToFindABlueprint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Unable to set a new current context because there is already a current context that is ready. You must first commit / dispose the current context..
         /// </summary>
         internal static string UnableToSetCurrentContextBecauseThereIsAlreadyOne {
@@ -408,6 +462,15 @@ namespace Backstage {
         internal static string UsingDefaultNoSecurityProvider {
             get {
                 return ResourceManager.GetString("UsingDefaultNoSecurityProvider", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The type {0} implements the non-generic variant of IBlueprint. Please use the generic IBlueprint&lt;T&gt;..
+        /// </summary>
+        internal static string UsingNonGenericIBlueprint {
+            get {
+                return ResourceManager.GetString("UsingNonGenericIBlueprint", resourceCulture);
             }
         }
     }

@@ -62,6 +62,7 @@
     <Compile Include="DefaultContextFactoryTest.cs" />
     <Compile Include="DefaultContextTest.cs" />
     <Compile Include="ExpressionExtensionsTest.cs" />
+    <Compile Include="FactoryTest.cs" />
     <Compile Include="NoSecurityProviderTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SetUpFixture.cs" />

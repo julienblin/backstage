@@ -150,11 +150,17 @@
   <data name="ErrorWhileCommitting" xml:space="preserve">
     <value>There has been an error while committing transaction. See inner exception for more information.</value>
   </data>
+  <data name="ErrorWhileCreatingTypeDefaultConstructor" xml:space="preserve">
+    <value>There has been an error while creating type {0}. Please check that there is a default constructor. See inner exception for more details.</value>
+  </data>
   <data name="ErrorWhileExecutingCommandAsync" xml:space="preserve">
     <value>Error while executing async command {0}. See inner exception for more details.</value>
   </data>
   <data name="ErrorWhileRaisingDomainEvent" xml:space="preserve">
     <value>There has been an error while raising domain event {0} with handler {1}. See inner exception for more details.</value>
+  </data>
+  <data name="ErrorWhileScanningAssembly" xml:space="preserve">
+    <value>There has been an error while scanning assembly {0}. LoaderExceptions: {1}.</value>
   </data>
   <data name="ErrorWhileStarting" xml:space="preserve">
     <value>Error while starting {0}. See inner exception for more details.</value>
@@ -195,11 +201,17 @@
   <data name="Removed" xml:space="preserve">
     <value>Removed {0}.</value>
   </data>
+  <data name="ScannedAndFoundBlueprints" xml:space="preserve">
+    <value>Scanned assemblies and found {0} blueprints.</value>
+  </data>
   <data name="ScannedAndFoundDomainEventHandlers" xml:space="preserve">
     <value>Scanned {0} and found {1} event handlers.</value>
   </data>
   <data name="Scanning" xml:space="preserve">
     <value>Scanning {0}...</value>
+  </data>
+  <data name="ScanningAssembliesForBlueprints" xml:space="preserve">
+    <value>Scanning assemblies for blueprints...</value>
   </data>
   <data name="SecurityProviderReturnedNoResult" xml:space="preserve">
     <value>The security provider {0} returned no result for operation {1}. Assuming a false, but you should have a look.</value>
@@ -225,6 +237,12 @@
   <data name="TransactionOptionsCannotBeModified" xml:space="preserve">
     <value>Transaction options cannot be modified when there is a dependent transaction.</value>
   </data>
+  <data name="TypeMustBeIEntity" xml:space="preserve">
+    <value>The type {0} must implement the IEntity interface to be able to add it to the current context.</value>
+  </data>
+  <data name="UnableToFindABlueprint" xml:space="preserve">
+    <value>Unable to find a blueprint for {0}. Please verify that there is an implementation of IBlueprint&lt;{0}&gt; and that it is accessible by the current AppDomain.</value>
+  </data>
   <data name="UnableToSetCurrentContextBecauseThereIsAlreadyOne" xml:space="preserve">
     <value>Unable to set a new current context because there is already a current context that is ready. You must first commit / dispose the current context.</value>
   </data>
@@ -233,5 +251,8 @@
   </data>
   <data name="UsingDefaultNoSecurityProvider" xml:space="preserve">
     <value>No security provider has been specified. All operations are authorized.</value>
+  </data>
+  <data name="UsingNonGenericIBlueprint" xml:space="preserve">
+    <value>The type {0} implements the non-generic variant of IBlueprint. Please use the generic IBlueprint&lt;T&gt;.</value>
   </data>
 </root>

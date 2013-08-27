@@ -58,6 +58,7 @@
     <Compile Include="Args.cs" />
     <Compile Include="AuthorizationResult.cs" />
     <Compile Include="BackstageException.cs" />
+    <Compile Include="IBlueprint.cs" />
     <Compile Include="CompositeContextProvider.cs" />
     <Compile Include="CompositeContextProviderFactory.cs" />
     <Compile Include="Context.cs" />
@@ -68,6 +69,7 @@
     <Compile Include="DomainEventRaisedEventArgs.cs" />
     <Compile Include="DomainEvents.cs" />
     <Compile Include="ExpressionExtensions.cs" />
+    <Compile Include="Factory.cs" />
     <Compile Include="HashCode.cs" />
     <Compile Include="IDomainEvent.cs" />
     <Compile Include="IHandleDomainEvent.cs" />
