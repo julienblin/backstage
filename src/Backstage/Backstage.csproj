@@ -59,6 +59,7 @@
     <Compile Include="Args.cs" />
     <Compile Include="AuthorizationResult.cs" />
     <Compile Include="BackstageException.cs" />
+    <Compile Include="Blueprint.cs" />
     <Compile Include="IBlueprint.cs" />
     <Compile Include="CompositeContextProvider.cs" />
     <Compile Include="CompositeContextProviderFactory.cs" />
@@ -102,6 +103,7 @@
     </Compile>
     <Compile Include="StringExtensions.cs" />
     <Compile Include="TransactionCommittingEventArgs.cs" />
+    <Compile Include="TypeScanner.cs" />
     <Compile Include="ValidatableExtensions.cs" />
   </ItemGroup>
   <ItemGroup>

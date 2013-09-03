@@ -1,6 +1,7 @@
 ﻿namespace Backstage.Tests
 {
     using System;
+    using System.Linq;
 
     using FluentAssertions;
 
@@ -46,10 +47,26 @@
         }
 
         [Test]
+        public void It_should_build_n()
+        {
+            var built = Factory.Build<TestObject>(5);
+            built.Should().HaveCount(5);
+            built.First().Name.Should().Be("Foo");
+        }
+
+        [Test]
         public void It_should_build_with_overrides()
         {
             var built = Factory.Build<TestObject>(x => x.Name = "FooBar");
             built.Name.Should().Be("FooBar");
+        }
+
+        [Test]
+        public void It_should_build_with_overrides_and_n()
+        {
+            var built = Factory.Build<TestObject>(10, (i, x) => x.Name = "FooBar" + i);
+            built.Should().HaveCount(10);
+            built.First().Name.Should().Be("FooBar0");
         }
 
         [Test]
@@ -65,6 +82,15 @@
             var built = Factory.BuildAndAdd<TestObjectsubclass>();
             built.Name.Should().Be("Bar");
             this.contextProviderMock.Verify(x => x.Add(built));
+        }
+
+        [Test]
+        public void It_should_build_and_add_n()
+        {
+            var built = Factory.BuildAndAdd<TestObjectsubclass>(5).ToList();
+            built.Should().HaveCount(5);
+            built.First().Name.Should().Be("Bar");
+            this.contextProviderMock.Verify(x => x.Add(It.IsAny<TestObjectsubclass>()), Times.Exactly(5));
         }
 
         [Test]
@@ -98,9 +124,9 @@
         {
         }
 
-        public class TestObjectBlueprint : IBlueprint<TestObject>
+        public class TestObjectBlueprint : Blueprint<TestObject>
         {
-            public object Build(Type targetType)
+            public override object Build(Type targetType)
             {
                 if (targetType == typeof(TestObjectsubclass))
                 {

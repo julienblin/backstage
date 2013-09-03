@@ -204,17 +204,11 @@
   <data name="Removed" xml:space="preserve">
     <value>Removed {0}.</value>
   </data>
-  <data name="ScannedAndFoundBlueprints" xml:space="preserve">
-    <value>Scanned assemblies and found {0} blueprints.</value>
-  </data>
   <data name="ScannedAndFoundDomainEventHandlers" xml:space="preserve">
     <value>Scanned {0} and found {1} event handlers.</value>
   </data>
   <data name="Scanning" xml:space="preserve">
     <value>Scanning {0}...</value>
-  </data>
-  <data name="ScanningAssembliesForBlueprints" xml:space="preserve">
-    <value>Scanning assemblies for blueprints...</value>
   </data>
   <data name="SecurityProviderReturnedNoResult" xml:space="preserve">
     <value>The security provider {0} returned no result for operation {1}. Assuming a false, but you should have a look.</value>

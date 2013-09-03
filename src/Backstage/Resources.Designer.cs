@@ -322,15 +322,6 @@ namespace Backstage {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Scanned assemblies and found {0} blueprints..
-        /// </summary>
-        internal static string ScannedAndFoundBlueprints {
-            get {
-                return ResourceManager.GetString("ScannedAndFoundBlueprints", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Scanned {0} and found {1} event handlers..
         /// </summary>
         internal static string ScannedAndFoundDomainEventHandlers {
@@ -345,15 +336,6 @@ namespace Backstage {
         internal static string Scanning {
             get {
                 return ResourceManager.GetString("Scanning", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Scanning assemblies for blueprints....
-        /// </summary>
-        internal static string ScanningAssembliesForBlueprints {
-            get {
-                return ResourceManager.GetString("ScanningAssembliesForBlueprints", resourceCulture);
             }
         }
         

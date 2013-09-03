@@ -3,16 +3,14 @@
     using System;
     using System.Collections.Generic;
     using System.Globalization;
-    using System.IO;
     using System.Linq;
-    using System.Reflection;
     using System.Threading;
 
     using Common.Logging;
 
     /// <summary>
     /// Factory - use it to build valid objects. Useful for testing.
-    /// Objects are defined using <see cref="IBlueprint{T}"/>.
+    /// Objects are defined using <see cref="IBlueprint"/> and <see cref="Blueprint{T}"/>.
     /// Blueprints are auto-discovered at runtime.
     /// </summary>
     /// <example>
@@ -24,7 +22,7 @@
     ///     public string Name {get;set;
     /// }
     /// 
-    /// public class EmployeeBlueprint : IBlueprint<Employee>
+    /// public class EmployeeBlueprint : Blueprint<Employee>
     /// {
     ///     public Employee Build()
     ///     {
@@ -79,6 +77,26 @@
         }
 
         /// <summary>
+        /// Builds n instances of <typeparamref name="T"/> according to a blueprint.
+        /// </summary>
+        /// <param name="numberOfInstances">
+        /// The number of instances to build.
+        /// </param>
+        /// <typeparam name="T">
+        /// The type.
+        /// </typeparam>
+        /// <returns>
+        /// The created object.
+        /// </returns>
+        public static IEnumerable<T> Build<T>(int numberOfInstances)
+        {
+            for (var i = 0; i < numberOfInstances; i++)
+            {
+                yield return Build<T>(null);
+            }
+        }
+
+        /// <summary>
         /// Builds an instance of <typeparamref name="T"/> according to a blueprint,
         /// and adds it to the <see cref="Context.Current"/>.
         /// </summary>
@@ -92,6 +110,28 @@
             where T : IEntity
         {
             return BuildAndAdd<T>(null);
+        }
+
+        /// <summary>
+        /// Builds n instances of <typeparamref name="T"/> according to a blueprint,
+        /// and adds it to the <see cref="Context.Current"/>.
+        /// </summary>
+        /// <param name="numberOfInstances">
+        /// The number of instances to build.
+        /// </param>
+        /// <typeparam name="T">
+        /// The type.
+        /// </typeparam>
+        /// <returns>
+        /// The created objects.
+        /// </returns>
+        public static IEnumerable<T> BuildAndAdd<T>(int numberOfInstances)
+            where T : IEntity
+        {
+            for (var i = 0; i < numberOfInstances; i++)
+            {
+                yield return BuildAndAdd<T>(null);
+            }
         }
 
         /// <summary>
@@ -117,6 +157,30 @@
         }
 
         /// <summary>
+        /// Builds n instances of <typeparamref name="T"/> according to a blueprint.
+        /// </summary>
+        /// <param name="numberOfInstances">
+        /// The number of instances to build.
+        /// </param>
+        /// <param name="overrides">
+        /// Overrides the values.
+        /// </param>
+        /// <typeparam name="T">
+        /// The type.
+        /// </typeparam>
+        /// <returns>
+        /// The created objects.
+        /// </returns>
+        public static IEnumerable<T> Build<T>(int numberOfInstances, Action<int, T> overrides)
+        {
+            for (var i = 0; i < numberOfInstances; i++)
+            {
+                var localIndex = i;
+                yield return Build<T>(x => overrides(localIndex, x));
+            }
+        }
+
+        /// <summary>
         /// Builds an instance of <typeparamref name="T"/> according to a blueprint,
         /// and adds it to the <see cref="Context.Current"/>.
         /// </summary>
@@ -138,6 +202,32 @@
         }
 
         /// <summary>
+        /// Builds n instances of <typeparamref name="T"/> according to a blueprint,
+        /// and adds it to the <see cref="Context.Current"/>.
+        /// </summary>
+        /// <param name="numberOfInstances">
+        /// The number of instances to build.
+        /// </param>
+        /// <param name="overrides">
+        /// Overrides the values.
+        /// </param>
+        /// <typeparam name="T">
+        /// The type.
+        /// </typeparam>
+        /// <returns>
+        /// The created objects.
+        /// </returns>
+        public static IEnumerable<T> BuildAndAdd<T>(int numberOfInstances, Action<int, T> overrides)
+            where T : IEntity
+        {
+            for (var i = 0; i < numberOfInstances; i++)
+            {
+                var localIndex = i;
+                yield return BuildAndAdd<T>(x => overrides(localIndex, x));
+            }
+        }
+
+        /// <summary>
         /// Builds an instance of <paramref name="type"/> according to a blueprint.
         /// </summary>
         /// <param name="type">
@@ -149,6 +239,26 @@
         public static object Build(Type type)
         {
             return Build(type, null);
+        }
+
+        /// <summary>
+        /// Builds n instances of <paramref name="type"/> according to a blueprint.
+        /// </summary>
+        /// <param name="numberOfInstances">
+        /// The number of instances to build.
+        /// </param>
+        /// <param name="type">
+        /// The type.
+        /// </param>
+        /// <returns>
+        /// The created objects.
+        /// </returns>
+        public static IEnumerable<object> Build(int numberOfInstances, Type type)
+        {
+            for (var i = 0; i < numberOfInstances; i++)
+            {
+                yield return Build(type);
+            }
         }
 
         /// <summary>
@@ -167,6 +277,27 @@
         }
 
         /// <summary>
+        /// Builds n instances of <paramref name="type"/> according to a blueprint,
+        /// and adds it to the <see cref="Context.Current"/>.
+        /// </summary>
+        /// <param name="numberOfInstances">
+        /// The number of instances to build.
+        /// </param>
+        /// <param name="type">
+        /// The type.
+        /// </param>
+        /// <returns>
+        /// The created objects.
+        /// </returns>
+        public static IEnumerable<object> BuildAndAdd(int numberOfInstances, Type type)
+        {
+            for (var i = 0; i < numberOfInstances; i++)
+            {
+                yield return BuildAndAdd(type);
+            }
+        }
+
+        /// <summary>
         /// Builds an instance of <paramref name="type"/> according to a blueprint.
         /// </summary>
         /// <param name="type">
@@ -180,7 +311,7 @@
         /// </returns>
         public static object Build(Type type, Action<object> overrides)
         {
-            var blueprint = FoundBlueprint(type);
+            var blueprint = FindBlueprint(type);
             var result = blueprint.Build(type);
             if (overrides != null)
             {
@@ -188,6 +319,30 @@
             }
 
             return result;
+        }
+
+        /// <summary>
+        /// Builds n instances of <paramref name="type"/> according to a blueprint.
+        /// </summary>
+        /// <param name="numberOfInstances">
+        /// The number of instances to build.
+        /// </param>
+        /// <param name="type">
+        /// The type.
+        /// </param>
+        /// <param name="overrides">
+        /// Overrides the values.
+        /// </param>
+        /// <returns>
+        /// The created objects.
+        /// </returns>
+        public static IEnumerable<object> Build(int numberOfInstances, Type type, Action<int, object> overrides)
+        {
+            for (var i = 0; i < numberOfInstances; i++)
+            {
+                var localIndex = i;
+                yield return Build(type, x => overrides(localIndex, x));
+            }
         }
 
         /// <summary>
@@ -201,7 +356,7 @@
         /// Overrides the values.
         /// </param>
         /// <returns>
-        /// The created object.
+        /// The created objects.
         /// </returns>
         /// <exception cref="BackstageException">
         /// if <paramref name="type"/> doesn't implement <see cref="IEntity"/>.
@@ -221,6 +376,34 @@
         }
 
         /// <summary>
+        /// Builds n instances of <paramref name="type"/> according to a blueprint,
+        /// and adds it to the <see cref="Context.Current"/>.
+        /// </summary>
+        /// <param name="numberOfInstances">
+        /// The number of instances to build.
+        /// </param>
+        /// <param name="type">
+        /// The type.
+        /// </param>
+        /// <param name="overrides">
+        /// Overrides the values.
+        /// </param>
+        /// <returns>
+        /// The created objects.
+        /// </returns>
+        /// <exception cref="BackstageException">
+        /// if <paramref name="type"/> doesn't implement <see cref="IEntity"/>.
+        /// </exception>
+        public static IEnumerable<object> BuildAndAdd(int numberOfInstances, Type type, Action<int, object> overrides)
+        {
+            for (var i = 0; i < numberOfInstances; i++)
+            {
+                var localIndex = i;
+                yield return BuildAndAdd(type, x => overrides(localIndex, x));
+            }
+        }
+
+        /// <summary>
         /// Returns the blueprint associated with <paramref name="type"/>.
         /// </summary>
         /// <param name="type">
@@ -232,7 +415,7 @@
         /// <exception cref="BackstageException">
         /// If not blueprint found.
         /// </exception>
-        private static IBlueprint FoundBlueprint(Type type)
+        private static IBlueprint FindBlueprint(Type type)
         {
             // First found exact type.
             if (Blueprints.Value.ContainsKey(type))
@@ -254,63 +437,14 @@
         }
 
         /// <summary>
-        /// Scans the available assemblies for <see cref="IBlueprint{T}"/> implementations.
+        /// Scans the available assemblies for <see cref="IBlueprint"/> implementations.
         /// </summary>
         /// <returns>
         /// The scan result.
         /// </returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2001:AvoidCallingProblematicMethods", MessageId = "System.Reflection.Assembly.LoadFrom", Justification = "OK for assembly scanning")]
         private static IDictionary<Type, IBlueprint> GetBlueprints()
         {
-            Log.Debug(Resources.ScanningAssembliesForBlueprints);
-            var result = new Dictionary<Type, IBlueprint>();
-            foreach (var assemblyFile in Directory.EnumerateFiles(AppDomain.CurrentDomain.BaseDirectory).Where(x => x.EndsWith(".dll", StringComparison.OrdinalIgnoreCase) || x.EndsWith(".exe", StringComparison.OrdinalIgnoreCase)))
-            {
-                try
-                {
-                    var assembly = Assembly.LoadFrom(assemblyFile);
-                    var blueprintTypes =
-                        assembly.GetTypes()
-                                .Where(
-                                    x =>
-                                    !x.IsAbstract && !x.IsInterface
-                                    && typeof(IBlueprint).IsAssignableFrom(x));
-
-                    foreach (var blueprintType in blueprintTypes)
-                    {
-                        var genericInterface =
-                            blueprintType.GetInterfaces().FirstOrDefault(x => x.GetGenericTypeDefinition() == typeof(IBlueprint<>));
-                        if (genericInterface == null)
-                        {
-                            var message = string.Format(CultureInfo.InvariantCulture, Resources.UsingNonGenericIBlueprint, blueprintType);
-                            Log.Error(message);
-                            throw new BackstageException(message);
-                        }
-
-                        var objectType = genericInterface.GetGenericArguments().First();
-
-                        try
-                        {
-                            var blueprint = (IBlueprint)Activator.CreateInstance(blueprintType);
-                            result.Add(objectType, blueprint);
-                        }
-                        catch (Exception activatorException)
-                        {
-                            var message = string.Format(CultureInfo.InvariantCulture, Resources.ErrorWhileCreatingTypeDefaultConstructor, blueprintType);
-                            Log.Error(message, activatorException);
-                            throw new BackstageException(message, activatorException);
-                        }
-                    }
-                }
-                catch (ReflectionTypeLoadException ex)
-                {
-                    var loaderExceptions = string.Join(", ", ex.LoaderExceptions.Select(x => x.ToString()));
-                    Log.Warn(string.Format(CultureInfo.InvariantCulture, Resources.ErrorWhileScanningAssembly, assemblyFile, loaderExceptions), ex);
-                }
-            }
-
-            Log.Debug(string.Format(CultureInfo.InvariantCulture, Resources.ScannedAndFoundBlueprints, result.Count));
-            return result;
+            return TypeScanner.FindAndBuildImplementationsOf<IBlueprint>().ToDictionary(x => x.BuiltType);
         }
     }
 }

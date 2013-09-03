@@ -3,15 +3,23 @@
     using System;
 
     /// <summary>
-    /// Marker interface for blueprints.
-    /// You might want to use <see cref="Blueprint{T}"/> instead of this interface.
+    /// A blueprint is the way to tell the <see cref="Factory"/> how to build objects.
     /// </summary>
-    public interface IBlueprint
+    /// <typeparam name="T">
+    /// The type of objects built.
+    /// </typeparam>
+    public abstract class Blueprint<T> : IBlueprint
     {
         /// <summary>
         /// Gets the (base) <see cref="Type"/> that this blueprint builds.
         /// </summary>
-        Type BuiltType { get; }
+        public Type BuiltType
+        {
+            get
+            {
+                return typeof(T);
+            }
+        }
 
         /// <summary>
         /// Builds a minimal valid object.
@@ -23,6 +31,6 @@
         /// <returns>
         /// The created object.
         /// </returns>
-        object Build(Type targetType);
+        public abstract object Build(Type targetType);
     }
 }
