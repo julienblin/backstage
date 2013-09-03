@@ -268,6 +268,15 @@ namespace Backstage {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The type {0} is not an enum..
+        /// </summary>
+        internal static string MustBeEnum {
+            get {
+                return ResourceManager.GetString("MustBeEnum", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The current context holder ({0}) returned no current context..
         /// </summary>
         internal static string NoCurrentContext {

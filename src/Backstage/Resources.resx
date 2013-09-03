@@ -186,6 +186,9 @@
   <data name="GotById" xml:space="preserve">
     <value>GotById {0}, {1} -&gt; {2}.</value>
   </data>
+  <data name="MustBeEnum" xml:space="preserve">
+    <value>The type {0} is not an enum.</value>
+  </data>
   <data name="NoCurrentContext" xml:space="preserve">
     <value>The current context holder ({0}) returned no current context.</value>
   </data>

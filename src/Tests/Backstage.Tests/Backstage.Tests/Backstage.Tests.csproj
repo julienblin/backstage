@@ -49,6 +49,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Transactions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Xml" />
@@ -65,6 +66,7 @@
     <Compile Include="FactoryTest.cs" />
     <Compile Include="NoSecurityProviderTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RandTest.cs" />
     <Compile Include="SetUpFixture.cs" />
   </ItemGroup>
   <ItemGroup>
