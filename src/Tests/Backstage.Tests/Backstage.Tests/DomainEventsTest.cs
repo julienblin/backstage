@@ -16,10 +16,7 @@
         {
             var contextFactoryProviderMock = new Mock<IContextProviderFactory>();
             using (ContextFactory.StartNew(
-                new ContextFactoryConfiguration(contextFactoryProviderMock.Object)
-                    {
-                        DomainEventHandlersAssemblies = new[] { typeof(DomainEventsTest).Assembly }
-                    }))
+                new ContextFactoryConfiguration(contextFactoryProviderMock.Object)))
             {
                 DomainEvents.GetHandlers<DomainEventSample>().Should().HaveCount(1);
             }
@@ -28,6 +25,7 @@
         [Test]
         public void It_should_contact_subscriptions()
         {
+            DomainEvents.ClearSubscriptions();
             var eventHandler = new DomainEventHandlerSample();
             DomainEvents.Subscribe(eventHandler);
             DomainEvents.Raise(new DomainEventSample());

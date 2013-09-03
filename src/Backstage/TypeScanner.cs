@@ -60,11 +60,22 @@
                 try
                 {
                     var assembly = Assembly.LoadFrom(assemblyFile);
-                    result.AddRange(assembly.GetTypes()
+                    if (baseType.IsInterface && baseType.IsGenericTypeDefinition)
+                    {
+                        result.AddRange(assembly.GetTypes()
+                                            .Where(
+                                                x =>
+                                                !x.IsAbstract && !x.IsInterface
+                                                && (x.GetInterface(baseType.FullName) != null)));
+                    }
+                    else
+                    {
+                        result.AddRange(assembly.GetTypes()
                                             .Where(
                                                 x =>
                                                 !x.IsAbstract && !x.IsInterface
                                                 && baseType.IsAssignableFrom(x)));
+                    }
                 }
                 catch (ReflectionTypeLoadException ex)
                 {

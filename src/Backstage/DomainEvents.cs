@@ -16,7 +16,7 @@
         /// <summary>
         /// The mangled name for <see cref="IHandleDomainEvent{T}"/>, for interface search.
         /// </summary>
-        internal static readonly string HandleDomainEventsMangledName = typeof(IHandleDomainEvent<>).Name;
+        private static readonly string HandleDomainEventsMangledName = typeof(IHandleDomainEvent<>).Name;
 
         /// <summary>
         /// The log.
@@ -227,6 +227,22 @@
                 {
                     Handlers.Remove(typeof(T));
                 }
+            }
+            finally
+            {
+                ReaderWriterLock.ExitWriteLock();
+            }
+        }
+
+        /// <summary>
+        /// Clear all subscriptions.
+        /// </summary>
+        public static void ClearSubscriptions()
+        {
+            ReaderWriterLock.EnterWriteLock();
+            try
+            {
+                Handlers.Clear();
             }
             finally
             {

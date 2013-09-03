@@ -99,7 +99,7 @@
                     
                     this.configuration.ContextProviderFactory.EnforceValidation();
                     this.configuration.ContextProviderFactory.Start(this);
-                    this.ScanDomainEventHandlersAssemblies();
+                    ScanDomainEventHandlersAssemblies();
 
                     stopwatch.Stop();
                     Log.Info(Resources.StartedIn.Format(this.configuration.ContextProviderFactory, stopwatch.ElapsedMilliseconds));
@@ -183,23 +183,15 @@
         }
 
         /// <summary>
-        /// Scans <see cref="ContextFactoryConfiguration.DomainEventHandlersAssemblies"/> to register domain events handlers.
+        /// Registers domain events handlers.
         /// </summary>
-        private void ScanDomainEventHandlersAssemblies()
+        private static void ScanDomainEventHandlersAssemblies()
         {
-            foreach (var assembly in this.configuration.DomainEventHandlersAssemblies)
+            DomainEvents.ClearSubscriptions();
+
+            foreach (var domainEventHandler in TypeScanner.FindAndBuildImplementationsOf(typeof(IHandleDomainEvent<>)))
             {
-                Log.Debug(Resources.Scanning.Format(assembly));
-                var domainEventHandlerTypes = assembly.GetTypes()
-                                                  .Where(x => x.GetInterface(DomainEvents.HandleDomainEventsMangledName) != null)
-                                                  .ToList();
-
-                foreach (var handlerType in domainEventHandlerTypes)
-                {
-                    DomainEvents.Subscribe(Activator.CreateInstance(handlerType));
-                }
-
-                Log.Debug(Resources.ScannedAndFoundDomainEventHandlers.Format(assembly, domainEventHandlerTypes.Count));
+                DomainEvents.Subscribe(domainEventHandler);
             }
         }
     }

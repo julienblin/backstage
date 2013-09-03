@@ -20,11 +20,6 @@
         private readonly ICurrentContextHolder currentContextHolder;
 
         /// <summary>
-        /// The domain event handlers assemblies.
-        /// </summary>
-        private IEnumerable<Assembly> domainEventHandlersAssemblies;
-
-        /// <summary>
         /// The security provider.
         /// </summary>
         private ISecurityProvider securityProvider;
@@ -76,22 +71,6 @@
             get
             {
                 return this.currentContextHolder;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the list of assemblies to scan for <see cref="IHandleDomainEvent{T}"/>.
-        /// </summary>
-        public IEnumerable<Assembly> DomainEventHandlersAssemblies
-        {
-            get
-            {
-                return this.domainEventHandlersAssemblies ?? Enumerable.Empty<Assembly>();
-            }
-
-            set
-            {
-                this.domainEventHandlersAssemblies = value;
             }
         }
 

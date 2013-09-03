@@ -3,12 +3,14 @@
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.Linq;
 
     using Backstage.NHibernateProvider.Events;
     using Backstage.NHibernateProvider.Logs;
 
     using Common.Logging;
 
+    using FluentNHibernate;
     using FluentNHibernate.Cfg;
     using FluentNHibernate.Cfg.Db;
 
@@ -183,16 +185,22 @@
 
             var fluentConfig = Fluently.Configure().Database(fluentDbConfig);
 
+            if (!this.configuration.MappingAssemblies.Any())
+            {
+                this.configuration.MappingAssemblies = TypeScanner.FindConcreteImplementationsOf<IMappingProvider>()
+                                                                  .Select(x => x.Assembly)
+                                                                  .Where(x => x != typeof(IMappingProvider).Assembly)
+                                                                  .Distinct()
+                                                                  .ToList();
+            }
+
             foreach (var mappingAssembly in this.configuration.MappingAssemblies)
             {
                 fluentConfig.Mappings(m =>
                     {
                         var container = m.FluentMappings.AddFromAssembly(mappingAssembly);
                         container.Conventions.AddAssembly(typeof(NHContextProviderFactory).Assembly);
-                        foreach (var conventionAssembly in this.configuration.ConventionAssemblies)
-                        {
-                            container.Conventions.AddAssembly(conventionAssembly);
-                        }
+                        container.Conventions.AddAssembly(mappingAssembly);
                     });
             }
 
@@ -214,6 +222,11 @@
                 resultConfig.SetListener(ListenerType.PostInsert, domainEventListener);
                 resultConfig.SetListener(ListenerType.PostUpdate, domainEventListener);
                 resultConfig.SetListener(ListenerType.PostDelete, domainEventListener);
+            }
+
+            if (this.configuration.ExposeNHibernateConfiguration != null)
+            {
+                this.configuration.ExposeNHibernateConfiguration(resultConfig);
             }
 
             return resultConfig;

@@ -1,5 +1,6 @@
 ﻿namespace Backstage.NHibernateProvider
 {
+    using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
@@ -19,11 +20,6 @@
         /// The mapping assemblies.
         /// </summary>
         private IEnumerable<Assembly> mappingAssemblies;
-
-        /// <summary>
-        /// The convention assemblies.
-        /// </summary>
-        private IEnumerable<Assembly> conventionAssemblies;
 
         /// <summary>
         /// Gets or sets the connection string.
@@ -65,7 +61,8 @@
         }
 
         /// <summary>
-        /// Gets or sets the assemblies to scan for mapping classes.
+        /// Gets or sets the assemblies to scan for mapping classes and conventions.
+        /// If no assemblies are provided, the current directory will be scanned.
         /// </summary>
         public IEnumerable<Assembly> MappingAssemblies
         {
@@ -81,19 +78,9 @@
         }
 
         /// <summary>
-        /// Gets or sets the assemblies to scan for convention classes.
+        /// Gets or sets a function that gets the NHibernate configuration after
+        /// it has been constructed by the <see cref="NHContextProviderFactory"/>.
         /// </summary>
-        public IEnumerable<Assembly> ConventionAssemblies
-        {
-            get
-            {
-                return this.conventionAssemblies ?? Enumerable.Empty<Assembly>();
-            }
-
-            set
-            {
-                this.conventionAssemblies = value;
-            }
-        }
+        public Action<NHibernate.Cfg.Configuration> ExposeNHibernateConfiguration { get; set; }
     }
 }
